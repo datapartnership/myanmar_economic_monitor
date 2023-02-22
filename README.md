@@ -4,7 +4,7 @@ The Myanmar Macroeconomics, Trade and Investment team is responsible for underta
 
 This repository includes a starter Stratefic Brief, which includes preliminary adviosry for the Task Team on:
 
-- **Data Collection and Acquisition**. Identified data resources that could support the Economic Monitor update.
+- **Data Collection and Acquisition**. Identified data resources that could support the Monitor update. 
 
 - **Data Management**. Recommendations for managing derived project datasets.
 
