@@ -2,7 +2,7 @@ format: jb-book
 root: README
 
 parts:
-  - caption: Examples
+  - caption: Strategic Brief
     numbered: False
     chapters:
     - file: reports/myanmar-economic-monitor-strategic-brief.md
