@@ -3,10 +3,9 @@ root: README
 
 parts:
   - caption: Examples
-    numbered: True
+    numbered: False
     chapters:
-    - file: notebooks/world-bank-api.ipynb
-    - file: notebooks/world-bank-package.ipynb
+    - file: reports/myanmar-economic-monitor-strategic-brief.md
   - caption: Additional Resources
     chapters:
       - url: https://datapartnership.org
