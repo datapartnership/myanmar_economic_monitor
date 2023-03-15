@@ -15,4 +15,4 @@ parts:
   - caption: Data Products
   - caption: Acknowledgements
     chapters:
-      - file: docs/team
+    - file: docs/team
