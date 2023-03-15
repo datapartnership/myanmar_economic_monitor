@@ -5,15 +5,15 @@ parts:
   - caption: Strategic Brief
     numbered: False
     chapters:
-    - file: reports/myanmar-economic-monitor-strategic-brief.md
+      - file: reports/myanmar-economic-monitor-strategic-brief.md
   - caption: Introduction to Data Goods
     numbered: False
     chapters:
-    - file: docs/introduction_to_data_goods
+      - file: docs/introduction_to_data_goods
   - caption: Foundational Datasets and Data Products
     chapters:
-    - file: docs/foundational_datasets_and_data_products
+      - file: docs/foundational_datasets_and_data_products
   - caption: Data Products
   - caption: Acknowledgements
     chapters:
-    - file: docs/team
+      - file: docs/team
