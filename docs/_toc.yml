@@ -6,13 +6,13 @@ parts:
     numbered: False
     chapters:
     - file: reports/myanmar-economic-monitor-strategic-brief.md
-  - caption: Additional Resources
+  - caption: Introduction to Data Goods
+    numbered: False
     chapters:
-      - url: https://datapartnership.org
-        title: Development Data Partnership
-      - url: https://wbdatalab.org
-        title: World Bank Data Lab
-      - url: https://www.worldbank.org/en/about/unit/unit-dec
-        title: World Bank DEC
-      - url: https://www.worldbank.org/en/research/dime
-        title: World Bank DIME
+    - file: docs/introduction_to_data_goods
+  - caption: Foundational Datasets and Data Products
+    - file: docs/foundational_datasets_and_data_products
+  - caption: Data Products
+  - caption: Acknowledgements
+    chapters:
+      - file: docs/team
