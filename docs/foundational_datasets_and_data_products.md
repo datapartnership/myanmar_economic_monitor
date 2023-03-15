@@ -1,4 +1,4 @@
-# Foundational Datasets, Data Products, & Sample Indicators
+# Foundational Datasets and Data Products
 
 ## Foundational Datasets
 
@@ -12,7 +12,7 @@ Following is list of all Foundational Datasets used in this Data Good:
 The **Development Data Hub** is the World Bank's central data catalogue and includes meta-data and license information.
 ```
 
-Where feasible, all datasets that can be obtained through the Development Data Hub have been placed in a special collection: [Syria Economic Monitor Data Collection](https://datacatalog.worldbank.org/int/search/collections/sem). 
+Where feasible, all datasets that can be obtained through the Development Data Hub have been placed in a special collection: Myanmar Economic Data Collection (tbc).
 
 ```{table}
 :name: foundational_datasets
@@ -31,6 +31,8 @@ Where feasible, all datasets that can be obtained through the Development Data H
 | 10     | Normalized Difference Vegetation Index (NDVI) | Open                   | Normalized Difference Vegetation Index datasets sourced from MODIS, used to measure change in agricultural production | Monthly                                                           | [European Commission, Anomaly Hotspots of Agricultural Production](https://mars.jrc.ec.europa.eu/asap/country.php?cntry=238); [Development Data Hub](https://datacatalog.worldbank.org/int/data/dataset/0063843/syria__normalized_difference_vegetation_index) | [Andres Chamorro](mailto:achamorroelizond@worldbank.org), GOST                        |
 | 11     | Border Crossing Map                           | Authorized Access      | Border crossing analysis by UN Humanitarian Needs Assessment Programme                                                | No Planned Update (Last updated August 2022)                                               | [Project SharePoint](https://worldbankgroup.sharepoint.com/:b:/t/DevelopmentDataPartnershipCommunity-WBGroup/ERiG3FqcKxRFls7zAIFFuhgBe0_r8DiWeaIhDX1XDtd8mA?e=w6XVm7)                                                                    |                                              |
 ```
+
+
 
 ## Data Products Summary
 
@@ -54,7 +56,7 @@ Following is a summary of Data Products used in this Data Good:
 
 **Indicators** can be derived from a combination of **Foundational Datasets** and **Data Products**. By combining Foundational Datasets and Data Products, teams can, on-demand, develop a large array of indicators to meet their project needs. Indicators can presented side-by-side in an Excel workbook -- a format that is generally accessible to the widest audiences.  Because all indicators are based on the same underlying data, they are comparable with each other, across geographies and across time.
 
-For this project, sample indicators have been derived and aggregated at the governorate level and by year, to show changing trends in each governorate over time. Here is a link to the **Indicators Excel workbook** (accessible to team members via SharePoint): [Excel workbook](https://worldbankgroup.sharepoint.com/:x:/t/DevelopmentDataPartnershipCommunity-WBGroup/EXZkY4Z6vMVMjRVcIBCHqlkBVI4z1b9rP1fyyLQ6aluvWA?e=pFazxV), and following is a summary of sample indicators.
+For this project, sample indicators have been derived and aggregated at the XX level and by year, to show changing trends in each XX over time. Here is a link to the **Indicators Excel workbook** (accessible to team members via SharePoint): <Link>, and following is a summary of sample indicators.
 
 ```{table}
 :name: indicators
