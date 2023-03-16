@@ -14,6 +14,8 @@ parts:
     chapters:
       - file: docs/foundational_datasets_and_data_products
   - caption: Data Products
+      chapters:
+      - file: docs/introduction_to_data_goods
   - caption: Acknowledgements
     chapters:
       - file: docs/team
