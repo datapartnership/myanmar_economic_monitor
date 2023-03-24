@@ -12,10 +12,10 @@ parts:
       - file: docs/introduction_to_data_goods
   - caption: Foundational Datasets and Data Products
     chapters:
-      - file: docs/data-products.md
+      - file: docs/foundational_datasets_and_data_products.md
   - caption: Data Products
     chapters:
-      - file: docs/introduction_to_data_goods.md
+      - file: docs/data-products.md
   - caption: Sample Indicators and Insights
     chapters:
       - file: docs/sample-indicators  
