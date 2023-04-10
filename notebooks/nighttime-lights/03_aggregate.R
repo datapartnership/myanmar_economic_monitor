@@ -23,7 +23,11 @@ gf_sf <- gf_df %>% st_as_sf() %>% st_buffer(dist = 5000)
 gf_sp <- gf_sf %>% as("Spatial")
 
 #### Country file
-adm0_sp <- gadm(country = "MMR", level=0, path = tempdir()) %>% as("Spatial")
+#adm0_sp <- gadm(country = "MMR", level=0, path = tempdir()) %>% as("Spatial")
+#adm0_sp <- getData('GADM', country='MMR', level=0)
+adm0_sp <- read_sf(file.path(gadm_dir, "rawdata", paste0("gadm41_MMR_",0,".json"))) %>%
+  as("Spatial")
+
 
 #### Non GS Locations
 adm0_no_gf_sp <- gDifference(adm0_sp, gf_sp, byid=F)
@@ -32,8 +36,10 @@ adm0_no_gf_sp$id <- 1
 # Loop through ROIs ------------------------------------------------------------
 for(adm_level in 0:3){
   
-  roi_sf <- gadm(country = "MMR", level=adm_level, path = tempdir()) %>% 
-    st_as_sf() 
+  #roi_sf <- gadm(country = "MMR", level=adm_level, path = tempdir()) %>% 
+  #  st_as_sf() 
+  
+  roi_sf <- read_sf(file.path(gadm_dir, "rawdata", paste0("gadm41_MMR_",adm_level,".json")))
   
   # Loop through product -------------------------------------------------------
   # VNP46A2 = daily

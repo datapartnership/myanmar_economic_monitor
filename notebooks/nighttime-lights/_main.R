@@ -1,13 +1,15 @@
 # Myanmar Economic Monitor
 
 # Filepaths --------------------------------------------------------------------
-db_dir <- file.path("~", "Dropbox", "World Bank", "Side Work", "Myanmar Economic Monitor")
+db_dir  <- file.path("~", "Dropbox", "World Bank", "Side Work", "Myanmar Economic Monitor")
+git_dir <- file.path("~", "Documents", "Github", "myanmar-economic-monitor")
 
 data_dir      <- file.path(db_dir, "data")
 ntl_bm_dir    <- file.path(data_dir, "Nighttime Lights BlackMarble")
 gas_flare_dir <- file.path(data_dir, "Global Gas Flaring")
+gadm_dir      <- file.path(data_dir, "GADM")
 
-fig_dir <- file.path(db_dir, "outputs", "figures")
+fig_dir <- file.path(git_dir, "reports", "figures")
 
 # Functions --------------------------------------------------------------------
 pad3 <- function(x){
@@ -41,8 +43,8 @@ library(rgeos)
 library(leaflet)
 library(leaflet.extras)
 library(ggplot2)
-
-
+library(ggpubr)
+library(tidyr)
 library(purrr)
 library(furrr)
 library(stringr)
@@ -51,3 +53,27 @@ library(raster)
 library(dplyr)
 library(sf)
 library(lubridate)
+
+# Run Scripts ------------------------------------------------------------------
+
+if(F){
+  
+  ntl_git_dir <- file.path(git_dir, "notebooks", "nighttime-lights")
+  
+  #### Cleaning
+  source(file.path(ntl_git_dir, "01_clean_gas_flaring_data.R"))
+  source(file.path(ntl_git_dir, "01_download_gadm.R"))
+  source(file.path(ntl_git_dir, "02_download_black_marble.R"))
+  source(file.path(ntl_git_dir, "03_aggregate.R"))
+  source(file.path(ntl_git_dir, "04_append.R"))
+  
+  #### Analysis
+  source(file.path(ntl_git_dir, "05_adm_trends.R"))
+  source(file.path(ntl_git_dir, "05_comparison_2019_maps.R"))
+  source(file.path(ntl_git_dir, "05_map_ntl_annual_separate.R"))
+  source(file.path(ntl_git_dir, "05_map_ntl_annual_together.R"))
+  
+  
+}
+
+

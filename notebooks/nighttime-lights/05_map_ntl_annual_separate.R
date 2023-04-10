@@ -3,10 +3,12 @@
 # Make maps of nighttime lights for each year
 
 # Load data --------------------------------------------------------------------
-adm_sf <- gadm(country = "MMR", level=0, path = tempdir()) %>% st_as_sf()
+adm_sf <- read_sf(file.path(gadm_dir, "rawdata", paste0("gadm41_MMR_",0,".json")))
 
 # Annual map -------------------------------------------------------------------
 for(year_i in 2012:2022){
+  print(year_i)
+  
   r <- raster(file.path(ntl_bm_dir, "FinalData", "VNP46A4_rasters", 
                         paste0("bm_VNP46A4_",year_i,".tif")))
   
@@ -15,6 +17,7 @@ for(year_i in 2012:2022){
   
   r_df <- rasterToPoints(r, spatial = TRUE) %>% as.data.frame()
   names(r_df) <- c("value", "x", "y")
+  
   
   ## Remove very low values of NTL; can be considered noise 
   r_df$value[r_df$value <= 1] <- 0
@@ -31,12 +34,12 @@ for(year_i in 2012:2022){
                          mid = "yellow",
                          high = "red",
                          midpoint = 4) +
-    labs(title = paste0("Nighttime Lights ", year_i)) +
+    labs(title = paste0("Nighttime Lights: ", year_i)) +
     coord_quickmap() + 
     theme_void() +
     theme(plot.title = element_text(face = "bold", hjust = 0.5),
-          legend.position = "none")
+          legend.position = "none") 
   
   ggsave(p, filename = file.path(fig_dir, paste0("ntl_bm_",year_i,".png")),
-         height = 3, width = 5)
+         height = 4, width = 2)
 }

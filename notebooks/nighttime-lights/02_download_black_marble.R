@@ -10,7 +10,8 @@ BEARER <- read_csv("~/Desktop/bearer_bm.csv") %>% pull(token)
 # there.
 
 ## Grab polygons
-roi_sf <- gadm(country = "MMR", level=0, path = tempdir()) %>% st_as_sf()
+#roi_sf <- gadm(country = "MMR", level=0, path = tempdir()) %>% st_as_sf()
+roi_sf <- read_sf(file.path(gadm_dir, "rawdata", paste0("gadm41_MMR_",0,".json")))
 
 # Download annual data ---------------------------------------------------------
 # Downloads a raster for each month. If raster already created, skips calling 

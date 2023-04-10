@@ -1,15 +1,15 @@
 # Append Data
 
-roi = "adm0"
+roi = "adm2"
 product <- "VNP46A3"
 
-for(roi in c("tessellation", "adm0", "adm1", "adm2")){
-  for(product in c("VNP46A2", "VNP46A3")){
+for(roi in c("adm0", "adm1", "adm2", "adm3")){ # "tessellation", 
+  for(product in c("VNP46A2", "VNP46A3", "VNP46A4")){
     
     df <- file.path(ntl_bm_dir, "FinalData", "aggregated", paste0(roi, "_", product)) %>%
       list.files(pattern = "*.Rds",
                  full.names = T) %>%
-      map_df(readRDS_data)
+      map_df(readRDS)
     
     saveRDS(df, file.path(ntl_bm_dir, "FinalData", "aggregated", 
                           paste0(roi, "_", product, ".Rds")))
@@ -23,13 +23,3 @@ for(roi in c("tessellation", "adm0", "adm1", "adm2")){
 
 
 
-readRDS_data <- function(path){
-  df <- readRDS(path)
-  
-  df$date <- path %>%
-    substring(150, 159) %>%
-    str_replace_all("_", "-") %>%
-    ymd()
-  
-  return(df)
-}
