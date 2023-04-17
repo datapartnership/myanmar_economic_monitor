@@ -16,6 +16,7 @@ parts:
   - caption: Data Products
     chapters:
       - file: docs/data-products.md
+      - file: notebooks/vegetation-conditions/README
   - caption: Sample Indicators and Insights
     chapters:
       - file: docs/sample-indicators  
