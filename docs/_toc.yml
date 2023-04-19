@@ -17,6 +17,7 @@ parts:
     chapters:
       - file: docs/data-products.md
       - file: notebooks/vegetation-conditions/README
+      - file: notebooks/ntl-analysis/README
   - caption: Sample Indicators and Insights
     chapters:
       - file: docs/sample-indicators  
