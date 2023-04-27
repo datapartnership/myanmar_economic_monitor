@@ -1,6 +1,6 @@
 # Comparison to 2019 Maps
 
-roi <- 2
+roi <- 1
 
 for(roi in 1:3){
   
@@ -37,21 +37,21 @@ for(roi in 1:3){
     left_join(ntl_wide_df, by = "NAME_VAR")
   
   # Map --------------------------------------------------------------------------
-  roi_sf %>%
-    mutate(yr_2019_ln = log(yr_2019+1)) %>%
-    ggplot() +
-    geom_sf(aes(fill = yr_2019_ln),
-            color = NA) +
-    scale_fill_viridis_c() +
-    theme_void() +
-    labs(fill = "NTL (Logged)")
+  # roi_sf %>%
+  #   mutate(yr_2019_ln = log(yr_2019+1)) %>%
+  #   ggplot() +
+  #   geom_sf(aes(fill = yr_2019_ln),
+  #           color = NA) +
+  #   scale_fill_viridis_c() +
+  #   theme_void() +
+  #   labs(fill = "NTL (Logged)")
   
-  roi_sf %>%
-    ggplot() +
-    geom_sf(aes(fill = yr_20_b19_pc),
-            color = NA) +
-    scale_fill_viridis_c() +
-    theme_void()
+  # roi_sf %>%
+  #   ggplot() +
+  #   geom_sf(aes(fill = yr_20_b19_pc),
+  #           color = NA) +
+  #   scale_fill_viridis_c() +
+  #   theme_void()
   
   roi_stacked_sf <- roi_sf %>%
     dplyr::select(NAME_VAR, yr_20_b19_pc, yr_21_b19_pc, yr_22_b19_pc, geometry) %>%
@@ -64,16 +64,26 @@ for(roi in 1:3){
   
   roi_stacked_sf$value[is.na(roi_stacked_sf$value)] <- 0
   
+  roi_stacked_sf$value[roi_stacked_sf$value > 100]  <- 100
+  roi_stacked_sf$value[roi_stacked_sf$value < -100] <- -100
+  
   roi_stacked_sf %>%
     ggplot() +
     geom_sf(aes(fill = value),
-            color = NA) +
-    scale_fill_viridis_c() +
+            color = "black") +
+    #scale_fill_viridis_c() +
     theme_void() +
     theme(plot.title = element_text(face = "bold", hjust = 0.5)) +
     facet_wrap(~name) +
     labs(title = paste0("Percent Change in Nighttime Lights from 2019: ADM ", roi, " level"),
-         fill = "% Change")
+         fill = "% Change") +
+    scale_fill_gradient2(low = "red",
+                         mid = "white",
+                         high = "forestgreen",
+                         midpoint = 0,
+                         limits = c(-100, 100),
+                         breaks = c(-100, -50, 0, 50, 100),
+                         labels = c("< -100", "-50", "0", "50", "> 100"))
   
   ggsave(file.path(fig_dir, paste0("pc_2019_maps",roi,".png")),
          height = 5, width = 8)
