@@ -41,7 +41,7 @@ df %>%
         axis.text.x = element_text(size = 7),
         axis.title.y = element_text(angle = 0, vjust = 0.5)) 
 
-ggsave(file.path(fig_dir, paste0("ntl_trends_adm_zscore.png")),
+ggsave(file.path(fig_dir, paste0("ntl_trends_adm1_monthly.png")),
        height = height, width = width)
 
 df %>%
@@ -65,6 +65,6 @@ df %>%
         axis.text.x = element_text(size = 7),
         axis.title.y = element_text(angle = 0, vjust = 0.5)) 
 
-ggsave(file.path(fig_dir, paste0("ntl_trends_adm1_zscore.png")),
+ggsave(file.path(fig_dir, paste0("ntl_trends_adm1_monthly_zscore.png")),
        height = height, width = width)
 

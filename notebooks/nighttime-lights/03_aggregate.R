@@ -28,25 +28,32 @@ gf_sp <- gf_sf %>% as("Spatial")
 adm0_sp <- read_sf(file.path(gadm_dir, "rawdata", paste0("gadm41_MMR_",0,".json"))) %>%
   as("Spatial")
 
-
 #### Non GS Locations
 adm0_no_gf_sp <- gDifference(adm0_sp, gf_sp, byid=F)
 adm0_no_gf_sp$id <- 1
 
+# SEZ --------------------------------------------------------------------------
+sez_sf <- read_sf(file.path(data_dir, "SEZ", "RawData", "industrial__special_economic_zones_sept2019.shp"))
+sez_sf <- sez_sf %>% st_buffer(dist = 2.5)
+
 # Loop through ROIs ------------------------------------------------------------
-for(adm_level in 0:3){
+for(adm_level in c( "sez", "0", "1", "2", "3")){
   
   #roi_sf <- gadm(country = "MMR", level=adm_level, path = tempdir()) %>% 
   #  st_as_sf() 
   
-  roi_sf <- read_sf(file.path(gadm_dir, "rawdata", paste0("gadm41_MMR_",adm_level,".json")))
-  
+  if(adm_level == "sez"){
+    roi_sf <- sez_sf
+  } else{
+    roi_sf <- read_sf(file.path(gadm_dir, "rawdata", paste0("gadm41_MMR_",adm_level,".json")))
+  }
+
   # Loop through product -------------------------------------------------------
   # VNP46A2 = daily
   # VNP46A3 = monthly
   # VNP46A4 = annually
   
-  for(product in c("VNP46A3", "VNP46A4")){ # "VNP46A2", 
+  for(product in c("VNP46A4", "VNP46A3")){ # "VNP46A2", 
     
     ## Make directory to export files - organized by ROI and prduct
     OUT_DIR <- file.path(ntl_bm_dir, "FinalData", "aggregated", paste0("adm", adm_level, "_", product))

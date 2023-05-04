@@ -3,7 +3,7 @@
 roi = "adm2"
 product <- "VNP46A3"
 
-for(roi in c("adm0", "adm1", "adm2", "adm3")){ # "tessellation", 
+for(roi in c("adm0", "adm1", "adm2", "adm3", "admsez")){ # "tessellation", 
   for(product in c("VNP46A2", "VNP46A3", "VNP46A4")){
     
     df <- file.path(ntl_bm_dir, "FinalData", "aggregated", paste0(roi, "_", product)) %>%
