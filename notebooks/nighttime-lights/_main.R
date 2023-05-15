@@ -56,6 +56,7 @@ library(dplyr)
 library(sf)
 library(lubridate)
 library(WDI)
+library(broom)
 
 # Run Scripts ------------------------------------------------------------------
 
@@ -76,6 +77,7 @@ if(F){
   source(file.path(ntl_git_dir, "05_map_ntl_annual_separate.R"))
   source(file.path(ntl_git_dir, "05_map_ntl_annual_together.R"))
   
+  source(file.path(ntl_git_dir, "05_gas_flaring_map.R"))
   
 }
 
