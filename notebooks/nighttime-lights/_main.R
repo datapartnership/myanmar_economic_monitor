@@ -8,6 +8,8 @@ data_dir      <- file.path(db_dir, "data")
 ntl_bm_dir    <- file.path(data_dir, "Nighttime Lights BlackMarble")
 gas_flare_dir <- file.path(data_dir, "Global Gas Flaring")
 gadm_dir      <- file.path(data_dir, "GADM")
+gdp_dir       <- file.path(data_dir, "GDP")
+wdi_dir       <- file.path(data_dir, "WDI")
 
 fig_dir <- file.path(git_dir, "reports", "figures")
 
@@ -53,6 +55,7 @@ library(raster)
 library(dplyr)
 library(sf)
 library(lubridate)
+library(WDI)
 
 # Run Scripts ------------------------------------------------------------------
 

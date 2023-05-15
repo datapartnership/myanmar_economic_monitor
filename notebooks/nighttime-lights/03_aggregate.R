@@ -37,17 +37,19 @@ sez_sf <- read_sf(file.path(data_dir, "SEZ", "RawData", "industrial__special_eco
 sez_sf <- sez_sf %>% st_buffer(dist = 2.5)
 
 # Loop through ROIs ------------------------------------------------------------
-for(adm_level in c( "sez", "0", "1", "2", "3")){
+for(adm_level in c("bound2", "sez", "0", "1", "2", "3")){
   
   #roi_sf <- gadm(country = "MMR", level=adm_level, path = tempdir()) %>% 
   #  st_as_sf() 
   
   if(adm_level == "sez"){
     roi_sf <- sez_sf
+  } else if(adm_level == "bound2"){
+    roi_sf <- read_sf(file.path(data_dir, "Boundaries", "RawData", "mmr_polbnda_adm2_250k_mimu_1.shp"))
   } else{
     roi_sf <- read_sf(file.path(gadm_dir, "rawdata", paste0("gadm41_MMR_",adm_level,".json")))
   }
-
+  
   # Loop through product -------------------------------------------------------
   # VNP46A2 = daily
   # VNP46A3 = monthly
