@@ -15,6 +15,7 @@ parts:
     chapters:
       - file: notebooks/vegetation-conditions/README
       - file: notebooks/nighttime-lights/README
+      - file: notebooks/conflict/acled.ipynb
   - caption: Sample Indicators and Insights
     chapters:
       - file: docs/sample-indicators
