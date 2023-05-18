@@ -7,7 +7,22 @@ product <- "VNP46A4"
 ntl_df <- readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated", 
                             paste0(roi, "_", product, ".Rds")))
 
-# Figure -----------------------------------------------------------------------
+## Sez
+sez_sf <- read_sf(file.path(data_dir, "SEZ", "RawData", "industrial__special_economic_zones_sept2019.shp"))
+
+sez_df <- st_coordinates(sez_sf) %>%
+  as.data.frame() %>%
+  dplyr::rename(lon = X,
+                lat = Y)
+sez_df$Name <- sez_sf$Name
+
+ntl_df <- ntl_df %>%
+  left_join(sez_df, by = "Name")
+
+## Myn Map
+adm_sf <- read_sf(file.path(gadm_dir, "rawdata", paste0("gadm41_MMR_",0,".json")))
+
+# Shorten Names ----------------------------------------------------------------
 ntl_df <- ntl_df %>%
   mutate(Name = case_when(
     Name == "Bago Industrial Complex (Local Industrial Zone)" ~ "Bago Industrial Complex\n(Local Industrial Zone)",
@@ -26,12 +41,12 @@ ntl_df <- ntl_df %>%
     TRUE ~ Name
   ))
 
-
+# Trends -----------------------------------------------------------------------
 ntl_df %>%
   ggplot(aes(x = date, y = ntl_bm_mean)) +
   geom_col() +
-  scale_x_continuous(labels = 2012:2022,
-                     breaks = 2012:2022) +
+  scale_x_continuous(labels = seq(2012, 2022, 4),
+                     breaks = seq(2012, 2022, 4)) +
   labs(x = NULL,
        y = NULL,
        title = "Nighttime Lights: Gas Flaring Locations") +
@@ -46,3 +61,48 @@ ntl_df %>%
 
 ggsave(filename = file.path(fig_dir, "sez_ntl_trends.png"),
        height = 20, width = 15)
+
+# Trends -----------------------------------------------------------------------
+ntl_sum_df <- ntl_df %>%
+  group_by(Name, lon, lat) %>%
+  summarise(ntl_bm_mean_2012 = ntl_bm_mean[date %in% 2012],
+            ntl_bm_mean_2022 = ntl_bm_mean[date %in% 2022]) %>%
+  ungroup() %>%
+  mutate(ntl_bm_mean_22_12_chng = ntl_bm_mean_2022 - ntl_bm_mean_2012,
+         ntl_bm_mean_22_12_pc = ntl_bm_mean_22_12_chng / ntl_bm_mean_2012) %>%
+  
+  mutate(ntl_bm_mean_22_12_chng_cat = case_when(
+    (ntl_bm_mean_22_12_chng >= -120) & (ntl_bm_mean_22_12_chng <= 0) ~ "< 0",
+    (ntl_bm_mean_22_12_chng > 0) & (ntl_bm_mean_22_12_chng <= 50) ~ "0 - 50",
+    (ntl_bm_mean_22_12_chng > 50) & (ntl_bm_mean_22_12_chng <= 100) ~ "50 - 100",
+    (ntl_bm_mean_22_12_chng > 100) & (ntl_bm_mean_22_12_chng <= 150) ~ "100 - 150",
+    (ntl_bm_mean_22_12_chng > 150) ~ "> 150"
+  ) %>%
+    
+    factor(levels = c("< 0",
+                      "0 - 50",
+                      "50 - 100",
+                      "100 - 150",
+                      "> 150"))
+    ) 
+
+
+#ntl_sum_df$ntl_bm_mean_22_12_chng[ntl_sum_df$ntl_bm_mean_22_12_chng >= 150] <- 150
+
+ggplot() +
+  geom_sf(data = adm_sf,
+          fill = "gray20") +
+  geom_point(data = ntl_sum_df,
+             aes(x = lon, y = lat, fill = ntl_bm_mean_22_12_chng),
+             pch = 21,
+             size = 2) +
+  scale_fill_distiller(palette = "Spectral") +
+  labs(fill = "Change\nin NTL",
+       title = "Change in Nighttime Lights in Special Economic Zones\nfrom 2012 to 2022") +
+  theme_void() +
+  theme(strip.text = element_text(face = "bold"),
+        plot.title = element_text(face = "bold", hjust = 0.5)) +
+  facet_wrap(~ntl_bm_mean_22_12_chng_cat)
+
+ggsave(filename = file.path(fig_dir, "sez_ntl_map.png"),
+       height = 6, width = 6)
