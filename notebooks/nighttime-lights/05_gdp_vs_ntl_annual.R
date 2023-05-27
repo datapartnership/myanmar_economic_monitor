@@ -78,8 +78,8 @@ df_wide %>%
   geom_smooth(method='lm', formula= y~x, se=F, color = "darkorange") +
   geom_point(size = 3) +
   stat_cor(p.accuracy = 0.001, r.accuracy = 0.01) +
-  labs(x = "GDP",
-       y = "Nighttime\nLights") +
+  labs(x = "GDP, logged",
+       y = "Nighttime\nLights, logged") +
   theme_classic2() +
   theme(axis.title.y = element_text(angle = 0, vjust = 0.5))
 
@@ -160,12 +160,13 @@ ggsave(filename = file.path(fig_dir, "gdp_ntl_annual_trends_pc_log.png"),
        height = 3.5, width = 7)
 
 # Regression -------------------------------------------------------------------
-lm1 <- lm(gdp ~ ntl_bm_mean, data = df_wide) 
+lm1 <- lm(gdp ~ ntl_bm_mean, data = df_wide %>%
+            mutate(gdp = gdp / 1000000000)) 
 lm2 <- lm(log(gdp) ~ log(ntl_bm_mean), data = df_wide)
 
 stargazer(lm1,
           lm2,
-          dep.var.labels = c("GDP", "log(GDP)"),
+          dep.var.labels = c("GDP (Billions)", "log(GDP)"),
           covariate.labels = c("NTL", "log(NTL)"),
           omit.stat=c("LL","ser","f"),
           type = "html",

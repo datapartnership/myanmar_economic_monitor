@@ -54,6 +54,22 @@ df_wide %>%
 ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_scatter.png"),
        height = 3.5, width = 5)
 
+## Scatter: Log
+df_wide %>%
+  mutate(constant_gdp = log(constant_gdp),
+         ntl_bm_mean = log(ntl_bm_mean)) %>%
+  ggplot(aes(x = constant_gdp, y = ntl_bm_mean)) +
+  geom_smooth(method='lm', formula= y~x, se=F, color = "darkorange") +
+  geom_point(size = 3) +
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01) +
+  labs(x = "GDP, logged",
+       y = "Nighttime\nLights, logged") +
+  theme_classic2() +
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5))
+
+ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_scatter_log.png"),
+       height = 3.5, width = 5)
+
 ## Trends
 df_long %>%
   filter(name != "current_gdp",
