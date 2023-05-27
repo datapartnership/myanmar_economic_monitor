@@ -260,7 +260,6 @@ align: center
 Trends in GDP and Nighttime Lights: Percent Change since 2012
 ```
 
-
 ## Limitations
 
 Nighttime lights are a common data source for measuring local economic activity. However, it is a proxy that is strongly---although imperfectly---correlated with measures of interest, such as population, local GDP, and wealth. Consequently, care must be taken in interpreting reasons for changes in lights.
