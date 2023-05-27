@@ -39,20 +39,24 @@ cor_df <- df_long_gdp %>%
   filter(!is.na(gdp),
          !is.na(value)) %>%
   group_by(name) %>%
-  summarise(cor = cor(gdp, value)) %>%
+  summarise(cor = cor(gdp, value),
+            cor_log = cor(log(gdp), log(value))) %>%
   arrange(-cor)
 
 # Figure -----------------------------------------------------------------------
 ## Add Percent change from start
 df_long <- df_long %>%
+  mutate(value_log = log(value+1)) %>%
   
   group_by(name) %>%
-  mutate(value_start = value[year == 2012]) %>%
+  mutate(value_start = value[year == 2012],
+         value_log_start = value_log[year == 2012]) %>%
   ungroup(name) %>%
   
-  mutate(value_pc = (value - value_start)/value_start*100)
+  mutate(value_pc     = (value     - value_start)    /value_start*100,
+         value_log_pc = (value_log - value_log_start)/value_log_start*100)
 
-## Scatter
+## Scatter: levels
 df_wide %>%
   ggplot(aes(x = gdp, y = ntl_bm_mean)) +
   geom_smooth(method='lm', formula= y~x, se=F, color = "darkorange") +
@@ -66,7 +70,24 @@ df_wide %>%
 ggsave(filename = file.path(fig_dir, "gdp_ntl_annual_scatter.png"),
        height = 3.5, width = 5)
 
- ## Trends
+## Scatter: logs
+df_wide %>%
+  mutate(gdp = log(gdp),
+         ntl_bm_mean = log(ntl_bm_mean)) %>%
+  ggplot(aes(x = gdp, y = ntl_bm_mean)) +
+  geom_smooth(method='lm', formula= y~x, se=F, color = "darkorange") +
+  geom_point(size = 3) +
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01) +
+  labs(x = "GDP",
+       y = "Nighttime\nLights") +
+  theme_classic2() +
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5))
+
+ggsave(filename = file.path(fig_dir, "gdp_ntl_annual_scatter_log.png"),
+       height = 3.5, width = 5)
+
+
+## Trends
 df_long %>%
   filter(name %in% c("gdp", "ntl_bm_mean")) %>%
   mutate(name = case_when(
@@ -113,3 +134,42 @@ df_long %>%
 
 ggsave(filename = file.path(fig_dir, "gdp_ntl_annual_trends_pc.png"),
        height = 3.5, width = 7)
+
+## Percent Change Trends: Log
+df_long %>%
+  filter(name %in% c("gdp", "ntl_bm_mean")) %>%
+  mutate(name = case_when(
+    name == "gdp" ~ "GDP",
+    name == "ntl_bm_mean" ~ "Nighttime Lights"
+  )) %>%
+  ggplot(aes(x = year, y = value_log_pc, color = name)) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  scale_x_continuous(labels = 2012:2022,
+                     breaks = 2012:2022) +
+  labs(x = NULL,
+       y = "Percent\nChange",
+       color = NULL,
+       title = "GDP & Nighttime Lights: Percent Change Since 2012") +
+  scale_color_manual(values = c("gray20", "darkorange")) +
+  theme_classic2() +
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5),
+        plot.title = element_text(face = "bold"))
+
+ggsave(filename = file.path(fig_dir, "gdp_ntl_annual_trends_pc_log.png"),
+       height = 3.5, width = 7)
+
+# Regression -------------------------------------------------------------------
+lm1 <- lm(gdp ~ ntl_bm_mean, data = df_wide) 
+lm2 <- lm(log(gdp) ~ log(ntl_bm_mean), data = df_wide)
+
+stargazer(lm1,
+          lm2,
+          dep.var.labels = c("GDP", "log(GDP)"),
+          covariate.labels = c("NTL", "log(NTL)"),
+          omit.stat=c("LL","ser","f"),
+          type = "html",
+          out = file.path(fig_dir, "reg_gdp_ntl.html"))
+
+
+

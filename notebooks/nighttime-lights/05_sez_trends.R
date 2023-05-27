@@ -1,6 +1,6 @@
 # SEZ Trends
 
-# Load data --------------------------------------------------------------------
+# Load and prep data -----------------------------------------------------------
 roi     <- "admsez"
 product <- "VNP46A4"
 
@@ -8,7 +8,8 @@ ntl_df <- readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                             paste0(roi, "_", product, ".Rds")))
 
 ## Sez
-sez_sf <- read_sf(file.path(data_dir, "SEZ", "RawData", "industrial__special_economic_zones_sept2019.shp"))
+sez_sf <- read_sf(file.path(data_dir, "SEZ", "RawData", 
+                            "industrial__special_economic_zones_sept2019.shp"))
 
 sez_df <- st_coordinates(sez_sf) %>%
   as.data.frame() %>%
@@ -30,14 +31,6 @@ ntl_df <- ntl_df %>%
     Name == "Det Khi Na Thi Ri SME Industrial Zone (Nay Pyi Taw)" ~ "Det Khi Na Thi Ri SME\nIndustrial Zone (Nay Pyi Taw)",
     Name == "Korea-Myanmar Economic Cooperation Industrial Complex" ~ "Korea-Myanmar Economic\nCooperation Industrial Complex",
     Name == "Kyauk Tan Industrial Zone - Mawlamyine" ~ "Kyauk Tan Industrial\nZone - Mawlamyine",
-    Name == "" ~ "",
-    Name == "" ~ "",
-    Name == "" ~ "",
-    Name == "" ~ "",
-    Name == "" ~ "",
-    Name == "" ~ "",
-    Name == "" ~ "",
-    Name == "" ~ "",
     TRUE ~ Name
   ))
 
@@ -49,7 +42,7 @@ ntl_df %>%
                      breaks = seq(2012, 2022, 4)) +
   labs(x = NULL,
        y = NULL,
-       title = "Nighttime Lights: Gas Flaring Locations") +
+       title = "Nighttime Lights: Special Economic Zones") +
   theme_classic2() + 
   theme(axis.title.y = element_text(angle = 0, vjust = 0.5),
         plot.title = element_text(face = "bold",size = 16),
@@ -61,6 +54,28 @@ ntl_df %>%
 
 ggsave(filename = file.path(fig_dir, "sez_ntl_trends.png"),
        height = 20, width = 15)
+
+# SEZ Aggregate Trends ---------------------------------------------------------
+ntl_df %>%
+  group_by(date) %>%
+  dplyr::summarise(ntl_bm_mean = mean(ntl_bm_mean)) %>%
+  ungroup() %>%
+  
+  ggplot(aes(x = date, y = ntl_bm_mean)) +
+  geom_col() +
+  scale_x_continuous(labels = seq(2012, 2022, 4),
+                     breaks = seq(2012, 2022, 4)) +
+  labs(x = NULL,
+       y = NULL,
+       title = "Nighttime Lights: Special Economic Zones (Average)") +
+  theme_classic2() + 
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5),
+        plot.title = element_text(face = "bold",size = 16),
+        strip.text = element_text(face = "bold", size = 10),
+        strip.background = element_blank()) 
+
+ggsave(filename = file.path(fig_dir, "sez_ntl_trends_avg.png"),
+       height = 4, width = 6)
 
 # Trends -----------------------------------------------------------------------
 ntl_sum_df <- ntl_df %>%
@@ -86,8 +101,6 @@ ntl_sum_df <- ntl_df %>%
                       "> 150"))
     ) 
 
-
-#ntl_sum_df$ntl_bm_mean_22_12_chng[ntl_sum_df$ntl_bm_mean_22_12_chng >= 150] <- 150
 
 ggplot() +
   geom_sf(data = adm_sf,
