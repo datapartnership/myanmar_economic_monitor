@@ -4,7 +4,7 @@
 roi     <- "adm0"
 product <- "VNP46A3"
 
-ntl_df <- readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated", 
+ntl_df <- readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                         paste0(roi, "_", product, ".Rds")))
 
 ntl_df <- ntl_df %>%
@@ -34,12 +34,12 @@ df_long <- df_wide %>%
 ## Add Percent change from start
 df_long <- df_long %>%
   mutate(value_log = log(value+1)) %>%
-  
+
   group_by(name) %>%
   mutate(value_start = value[(year == 2015) & (quarter == "q1")],
          value_log_start = value_log[(year == 2015) & (quarter == "q1")]) %>%
   ungroup(name) %>%
-  
+
   mutate(value_pc = (value - value_start)/value_start*100,
          value_log_pc = (value_log - value_log_start)/value_log_start*100)
 
@@ -76,7 +76,7 @@ ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_scatter_log.png"),
 ## Trends
 df_long %>%
   filter(name != "current_gdp",
-         year >= 2015, 
+         year >= 2015,
          year <= 2019) %>%
   mutate(name = case_when(
     name == "constant_gdp" ~ "GDP",
@@ -104,7 +104,7 @@ ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_trends.png"),
 ## Trends - Log
 df_long %>%
   filter(name != "current_gdp",
-         year >= 2015, 
+         year >= 2015,
          year <= 2019) %>%
   mutate(name = case_when(
     name == "constant_gdp" ~ "GDP (logged)",
@@ -132,7 +132,7 @@ ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_trends_log.png"),
 ## Trends PC
 df_long %>%
   filter(name != "current_gdp",
-         year >= 2015, 
+         year >= 2015,
          year <= 2019) %>%
   mutate(name = case_when(
     name == "constant_gdp" ~ "GDP",
@@ -151,7 +151,7 @@ df_long %>%
        title = "Quarterly GDP & Nighttime Lights: Percent Change Since Q1 2015") +
   theme_classic2() +
   theme(plot.title = element_text(face = "bold")) +
-  scale_color_manual(values = c("gray20", "darkorange")) 
+  scale_color_manual(values = c("gray20", "darkorange"))
 
 ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_trends_pc.png"),
        height = 3.5, width = 7)
@@ -160,7 +160,7 @@ ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_trends_pc.png"),
 ## Trends PC - log
 df_long %>%
   filter(name != "current_gdp",
-         year >= 2015, 
+         year >= 2015,
          year <= 2019) %>%
   mutate(name = case_when(
     name == "constant_gdp" ~ "GDP (logged)",
@@ -179,7 +179,20 @@ df_long %>%
        title = "Quarterly GDP & Nighttime Lights (Logged): Percent Change Since Q1 2015") +
   theme_classic2() +
   theme(plot.title = element_text(face = "bold")) +
-  scale_color_manual(values = c("gray20", "darkorange")) 
+  scale_color_manual(values = c("gray20", "darkorange"))
 
 ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_trends_pc_log.png"),
        height = 3.5, width = 7)
+
+# Regression -------------------------------------------------------------------
+lm1 <- lm(constant_gdp ~ ntl_bm_mean, data = df_wide %>%
+            mutate(constant_gdp = constant_gdp / 1000000000))
+lm2 <- lm(log(constant_gdp) ~ log(ntl_bm_mean), data = df_wide)
+
+stargazer(lm1,
+          lm2,
+          dep.var.labels = c("GDP (Billions)", "log(GDP)"),
+          covariate.labels = c("NTL", "log(NTL)"),
+          omit.stat=c("LL","ser","f"),
+          type = "html",
+          out = file.path(fig_dir, "reg_gdp_ntl_quarterly.html"))

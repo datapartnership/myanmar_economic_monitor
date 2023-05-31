@@ -4,12 +4,12 @@
 roi     <- "adm0"
 product <- "VNP46A4"
 
-ntl_df <- readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated", 
+ntl_df <- readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                             paste0(roi, "_", product, ".Rds")))
 
 ntl_df <- ntl_df %>%
   rename(year = date) %>%
-  dplyr::select(year, 
+  dplyr::select(year,
                 ntl_bm_mean, ntl_bm_median,
                 ntl_bm_gf_prop_g2,
                 ntl_bm_gf_prop_g5,
@@ -47,12 +47,12 @@ cor_df <- df_long_gdp %>%
 ## Add Percent change from start
 df_long <- df_long %>%
   mutate(value_log = log(value+1)) %>%
-  
+
   group_by(name) %>%
   mutate(value_start = value[year == 2012],
          value_log_start = value_log[year == 2012]) %>%
   ungroup(name) %>%
-  
+
   mutate(value_pc     = (value     - value_start)    /value_start*100,
          value_log_pc = (value_log - value_log_start)/value_log_start*100)
 
@@ -97,7 +97,7 @@ df_long %>%
   ggplot(aes(x = year, y = value)) +
   geom_line(size = 1) +
   geom_point(size = 2) +
-  facet_wrap(~name, 
+  facet_wrap(~name,
              scales = "free_y",
              ncol = 1) +
   labs(x = NULL,
@@ -123,7 +123,7 @@ df_long %>%
   ggplot(aes(x = year, y = value_log)) +
   geom_line(size = 1) +
   geom_point(size = 2) +
-  facet_wrap(~name, 
+  facet_wrap(~name,
              scales = "free_y",
              ncol = 1) +
   labs(x = NULL,
@@ -165,15 +165,39 @@ ggsave(filename = file.path(fig_dir, "gdp_ntl_annual_trends_pc.png"),
        height = 3.5, width = 7)
 
 ## Percent Change Trends: Log
-df_long %>%
+df_long_fig <- df_long %>%
   filter(name %in% c("gdp", "ntl_bm_mean")) %>%
-  mutate(name = case_when(
-    name == "gdp" ~ "GDP",
-    name == "ntl_bm_mean" ~ "Nighttime Lights"
-  )) %>%
-  ggplot(aes(x = year, y = value_log_pc, color = name)) +
-  geom_line(size = 1) +
-  geom_point(size = 2) +
+  mutate(name_clean = case_when(
+    name == "gdp" ~ "GDP\n(logged)",
+    name == "ntl_bm_mean" ~ "Nighttime\nLights\n(logged)"
+  ))
+
+coeff <- 70
+
+ggplot() +
+  geom_line(data = df_long_fig %>% filter(name == "gdp"),
+            aes(x = year, y = value_log_pc, color = name_clean),
+            size = 1) +
+  geom_line(data = df_long_fig %>% filter(name == "ntl_bm_mean"),
+             aes(x = year, y = (value_log_pc/coeff), color = name_clean),
+             size = 1) +
+
+  geom_point(data = df_long_fig %>% filter(name == "gdp"),
+            aes(x = year, y = value_log_pc, color = name_clean),
+            size = 2) +
+  geom_point(data = df_long_fig %>% filter(name == "ntl_bm_mean"),
+            aes(x = year, y = (value_log_pc/coeff), color = name_clean),
+            size = 2) +
+
+  scale_y_continuous(
+
+    # Features of the first axis
+    name = "Percent\nChange",
+
+    # Add a second axis and specify its features
+    sec.axis = sec_axis(~.*coeff, name="Percent\nChange")
+  ) +
+
   scale_x_continuous(labels = 2012:2022,
                      breaks = 2012:2022) +
   labs(x = NULL,
@@ -182,15 +206,23 @@ df_long %>%
        title = "GDP & Nighttime Lights (Logged): Percent Change Since 2012") +
   scale_color_manual(values = c("gray20", "darkorange")) +
   theme_classic2() +
-  theme(axis.title.y = element_text(angle = 0, vjust = 0.5),
+  theme(axis.title.y = element_text(angle = 0,
+                                    vjust = 0.5,
+                                    face = "bold"),
+        axis.title.y.right = element_text(angle = 0,
+                                          vjust = 0.5,
+                                          face = "bold",
+                                          color = "darkorange"),
         plot.title = element_text(face = "bold"))
 
 ggsave(filename = file.path(fig_dir, "gdp_ntl_annual_trends_pc_log.png"),
-       height = 3.5, width = 7)
+       height = 3.5, width = 7.5)
+
+
 
 # Regression -------------------------------------------------------------------
 lm1 <- lm(gdp ~ ntl_bm_mean, data = df_wide %>%
-            mutate(gdp = gdp / 1000000000)) 
+            mutate(gdp = gdp / 1000000000))
 lm2 <- lm(log(gdp) ~ log(ntl_bm_mean), data = df_wide)
 
 stargazer(lm1,
