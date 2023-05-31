@@ -120,7 +120,7 @@ df_long %>%
   facet_wrap(~name, scales = "free_y", ncol = 1) +
   labs(x = NULL,
        y = NULL,
-       title = "Quarterly Nighttime Lights") +
+       title = "Quarterly GDP and Nighttime Lights (Logged)") +
   theme_classic2() +
   theme(strip.text = element_text(face = "bold", size = 12),
         strip.background = element_blank(),
@@ -176,7 +176,7 @@ df_long %>%
   labs(x = NULL,
        y = NULL,
        color = NULL,
-       title = "Quarterly GDP & Nighttime Lights: Percent Change Since Q1 2015") +
+       title = "Quarterly GDP & Nighttime Lights (Logged): Percent Change Since Q1 2015") +
   theme_classic2() +
   theme(plot.title = element_text(face = "bold")) +
   scale_color_manual(values = c("gray20", "darkorange")) 

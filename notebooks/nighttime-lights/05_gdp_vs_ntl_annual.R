@@ -101,12 +101,14 @@ df_long %>%
              scales = "free_y",
              ncol = 1) +
   labs(x = NULL,
-       y = NULL) +
+       y = NULL,
+       title = "Annual GDP and Nighttime Lights") +
   scale_x_continuous(labels = 2012:2022,
                      breaks = 2012:2022) +
   theme_classic2() +
   theme(strip.text = element_text(face = "bold", size = 12),
-        strip.background = element_blank())
+        strip.background = element_blank(),
+        plot.title = element_text(face = "bold"))
 
 ggsave(filename = file.path(fig_dir, "gdp_ntl_annual_trends.png"),
        height = 4.5, width = 6)
@@ -125,12 +127,14 @@ df_long %>%
              scales = "free_y",
              ncol = 1) +
   labs(x = NULL,
-       y = NULL) +
+       y = NULL,
+       title = "Annual GDP and Nighttime Lights (Logged)") +
   scale_x_continuous(labels = 2012:2022,
                      breaks = 2012:2022) +
   theme_classic2() +
   theme(strip.text = element_text(face = "bold", size = 12),
-        strip.background = element_blank())
+        strip.background = element_blank(),
+        plot.title = element_text(face = "bold"))
 
 ggsave(filename = file.path(fig_dir, "gdp_ntl_annual_trends_log.png"),
        height = 4.5, width = 6)
@@ -175,7 +179,7 @@ df_long %>%
   labs(x = NULL,
        y = "Percent\nChange",
        color = NULL,
-       title = "GDP & Nighttime Lights: Percent Change Since 2012") +
+       title = "GDP & Nighttime Lights (Logged): Percent Change Since 2012") +
   scale_color_manual(values = c("gray20", "darkorange")) +
   theme_classic2() +
   theme(axis.title.y = element_text(angle = 0, vjust = 0.5),
