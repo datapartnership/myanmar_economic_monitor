@@ -111,6 +111,31 @@ df_long %>%
 ggsave(filename = file.path(fig_dir, "gdp_ntl_annual_trends.png"),
        height = 4.5, width = 6)
 
+## Trends Log
+df_long %>%
+  filter(name %in% c("gdp", "ntl_bm_mean")) %>%
+  mutate(name = case_when(
+    name == "gdp" ~ "GDP (logged)",
+    name == "ntl_bm_mean" ~ "Nighttime Lights (logged)"
+  )) %>%
+  ggplot(aes(x = year, y = value_log)) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  facet_wrap(~name, 
+             scales = "free_y",
+             ncol = 1) +
+  labs(x = NULL,
+       y = NULL) +
+  scale_x_continuous(labels = 2012:2022,
+                     breaks = 2012:2022) +
+  theme_classic2() +
+  theme(strip.text = element_text(face = "bold", size = 12),
+        strip.background = element_blank())
+
+ggsave(filename = file.path(fig_dir, "gdp_ntl_annual_trends_log.png"),
+       height = 4.5, width = 6)
+
+
 ## Percent Change Trends
 df_long %>%
   filter(name %in% c("gdp", "ntl_bm_mean")) %>%

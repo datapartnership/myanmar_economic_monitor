@@ -17,6 +17,8 @@ sez_df <- st_coordinates(sez_sf) %>%
                 lat = Y)
 sez_df$Name <- sez_sf$Name
 
+write_csv(sez_df, file.path(data_dir, "SEZ", "FinalData", "sez_locations.csv"))
+
 ntl_df <- ntl_df %>%
   left_join(sez_df, by = "Name")
 

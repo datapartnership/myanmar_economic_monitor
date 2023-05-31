@@ -33,12 +33,15 @@ df_long <- df_wide %>%
 # Figure -----------------------------------------------------------------------
 ## Add Percent change from start
 df_long <- df_long %>%
+  mutate(value_log = log(value+1)) %>%
   
   group_by(name) %>%
-  mutate(value_start = value[(year == 2015) & (quarter == "q1")]) %>%
+  mutate(value_start = value[(year == 2015) & (quarter == "q1")],
+         value_log_start = value_log[(year == 2015) & (quarter == "q1")]) %>%
   ungroup(name) %>%
   
-  mutate(value_pc = (value - value_start)/value_start*100)
+  mutate(value_pc = (value - value_start)/value_start*100,
+         value_log_pc = (value_log - value_log_start)/value_log_start*100)
 
 ## Scatter
 df_wide %>%
@@ -98,6 +101,34 @@ df_long %>%
 ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_trends.png"),
        height = 4.5, width = 6)
 
+## Trends - Log
+df_long %>%
+  filter(name != "current_gdp",
+         year >= 2015, 
+         year <= 2019) %>%
+  mutate(name = case_when(
+    name == "constant_gdp" ~ "GDP (logged)",
+    name == "ntl_bm_mean" ~ "Nighttime Lights (logged)"
+  )) %>%
+  ggplot(aes(x = date, y = value_log)) +
+  geom_vline(xintercept = ymd("2016-01-01"), alpha = 0.2) +
+  geom_vline(xintercept = ymd("2017-01-01"), alpha = 0.2) +
+  geom_vline(xintercept = ymd("2018-01-01"), alpha = 0.2) +
+  geom_vline(xintercept = ymd("2019-01-01"), alpha = 0.2) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  facet_wrap(~name, scales = "free_y", ncol = 1) +
+  labs(x = NULL,
+       y = NULL,
+       title = "Quarterly Nighttime Lights") +
+  theme_classic2() +
+  theme(strip.text = element_text(face = "bold", size = 12),
+        strip.background = element_blank(),
+        plot.title = element_text(face = "bold"))
+
+ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_trends_log.png"),
+       height = 4.5, width = 6)
+
 ## Trends PC
 df_long %>%
   filter(name != "current_gdp",
@@ -126,4 +157,29 @@ ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_trends_pc.png"),
        height = 3.5, width = 7)
 
 
+## Trends PC - log
+df_long %>%
+  filter(name != "current_gdp",
+         year >= 2015, 
+         year <= 2019) %>%
+  mutate(name = case_when(
+    name == "constant_gdp" ~ "GDP (logged)",
+    name == "ntl_bm_mean" ~ "Nighttime Lights (logged)"
+  )) %>%
+  ggplot(aes(x = date, y = value_log_pc, color = name)) +
+  geom_vline(xintercept = ymd("2016-01-01"), alpha = 0.2) +
+  geom_vline(xintercept = ymd("2017-01-01"), alpha = 0.2) +
+  geom_vline(xintercept = ymd("2018-01-01"), alpha = 0.2) +
+  geom_vline(xintercept = ymd("2019-01-01"), alpha = 0.2) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  labs(x = NULL,
+       y = NULL,
+       color = NULL,
+       title = "Quarterly GDP & Nighttime Lights: Percent Change Since Q1 2015") +
+  theme_classic2() +
+  theme(plot.title = element_text(face = "bold")) +
+  scale_color_manual(values = c("gray20", "darkorange")) 
 
+ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_trends_pc_log.png"),
+       height = 3.5, width = 7)
