@@ -19,6 +19,7 @@ parts:
   - caption: Sample Indicators and Insights
     chapters:
       - file: docs/sample-indicators
+      - file: notebooks/sample-indicators/sagaing-story.ipynb
   - caption: Acknowledgements
     chapters:
       - file: docs/team.md
