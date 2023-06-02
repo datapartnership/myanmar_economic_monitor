@@ -1,7 +1,7 @@
 # Aggregate Nighttime Lights
 
 # Do if make changes to how data processed and need to start from scratch
-DELETE_DIR <- F 
+DELETE_DIR <- F
 
 if(DELETE_DIR){
   unlink(file.path(ntl_bm_dir, "FinalData", "aggregated"), recursive = T)
@@ -37,93 +37,95 @@ sez_sf <- read_sf(file.path(data_dir, "SEZ", "RawData", "industrial__special_eco
 sez_sf <- sez_sf %>% st_buffer(dist = 2.5)
 
 # Loop through ROIs ------------------------------------------------------------
-for(adm_level in c("bound2", "sez", "0", "1", "2", "3")){
-  
-  #roi_sf <- gadm(country = "MMR", level=adm_level, path = tempdir()) %>% 
-  #  st_as_sf() 
-  
+for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3")){
+
+  #roi_sf <- gadm(country = "MMR", level=adm_level, path = tempdir()) %>%
+  #  st_as_sf()
+
   if(adm_level == "sez"){
     roi_sf <- sez_sf
+  } else if(adm_level == "bound1"){
+    roi_sf <- read_sf(file.path(data_dir, "Boundaries", "RawData", "mmr_polbnda_adm1_250k_mimu.shp"))
   } else if(adm_level == "bound2"){
     roi_sf <- read_sf(file.path(data_dir, "Boundaries", "RawData", "mmr_polbnda_adm2_250k_mimu_1.shp"))
   } else{
     roi_sf <- read_sf(file.path(gadm_dir, "rawdata", paste0("gadm41_MMR_",adm_level,".json")))
   }
-  
+
   # Loop through product -------------------------------------------------------
   # VNP46A2 = daily
   # VNP46A3 = monthly
   # VNP46A4 = annually
-  
-  for(product in c("VNP46A4", "VNP46A3")){ # "VNP46A2", 
-    
+
+  for(product in c("VNP46A4", "VNP46A3")){ # "VNP46A2",
+
     ## Make directory to export files - organized by ROI and prduct
     OUT_DIR <- file.path(ntl_bm_dir, "FinalData", "aggregated", paste0("adm", adm_level, "_", product))
     dir.create(OUT_DIR)
-    
+
     # Loop through rasters -----------------------------------------------------
     r_name_vec <- file.path(ntl_bm_dir, "FinalData", paste0(product, "_rasters")) %>% list.files()
-    
+
     for(r_name_i in r_name_vec){
-      
+
       OUT_FILE <- file.path(OUT_DIR, r_name_i %>% str_replace_all(".tif", ".Rds"))
-      
+
       ## Check if file exists
       if(!file.exists(OUT_FILE)){
-        
+
         ## Load raster and create rasters for just gas flaring and non gas flaring locations
         r <- raster(file.path(ntl_bm_dir, "FinalData", paste0(product, "_rasters"), r_name_i))
-        
+
         r_gf   <- r %>% crop(gf_sp)         %>% mask(gf_sp)
         r_nogf <- r %>% crop(adm0_no_gf_sp) %>% mask(adm0_no_gf_sp)
-        
+
         ## Extract data
         roi_sf$ntl_bm_mean       <- exact_extract(r,      roi_sf, fun = "mean")
         roi_sf$ntl_bm_gf_mean    <- exact_extract(r_gf,   roi_sf, fun = "mean")
         roi_sf$ntl_bm_no_gf_mean <- exact_extract(r_nogf, roi_sf, fun = "mean")
-        
+
         roi_sf$ntl_bm_median       <- exact_extract(r,      roi_sf, fun = "median")
         roi_sf$ntl_bm_gf_median    <- exact_extract(r_gf,   roi_sf, fun = "median")
         roi_sf$ntl_bm_no_gf_median <- exact_extract(r_nogf, roi_sf, fun = "median")
-        
+
         for(thresh in c(2, 5, 10)){
-          
+
           r_t <- r
           r_t[] <- as.numeric(r[] > thresh)
-          
+
           r_t_gf   <- r_t %>% crop(gf_sp)         %>% mask(gf_sp)
           r_t_nogf <- r_t %>% crop(adm0_no_gf_sp) %>% mask(adm0_no_gf_sp)
-          
+
           roi_sf[[paste0("ntl_bm_prop_g", thresh)]]       <- exact_extract(r_t,      roi_sf, fun = "mean")
           roi_sf[[paste0("ntl_bm_gf_prop_g", thresh)]]    <- exact_extract(r_t_gf,   roi_sf, fun = "mean")
           roi_sf[[paste0("ntl_bm_no_gf_prop_g", thresh)]] <- exact_extract(r_t_nogf, roi_sf, fun = "mean")
-          
+
         }
-        
+
         ## Prep for export
         roi_df <- roi_sf
         roi_df$geometry <- NULL
-        
+
         ## Add date
         if(product == "VNP46A2"){
           year <- r_name_i %>% substring(12,15) %>% as.numeric()
-          day  <- r_name_i %>% substring(12,21) 
+          day  <- r_name_i %>% substring(12,21)
           date_r <- day %>% str_replace_all("_", "-") %>% ymd()
         }
-        
+
         if(product == "VNP46A3"){
           year <- r_name_i %>% substring(12,15) %>% as.numeric()
-          day  <- r_name_i %>% substring(12,21) 
+          day  <- r_name_i %>% substring(12,21)
           date_r <- day %>% str_replace_all("_", "-") %>% ymd()
         }
-        
+
         if(product == "VNP46A4"){
           # Just grab year
           date_r <- r_name_i %>% substring(12,15) %>% as.numeric()
-        }      
-        
+        }
+
         roi_df$date <- date_r
-        
+
         ## Export
         saveRDS(roi_df, OUT_FILE)
       }

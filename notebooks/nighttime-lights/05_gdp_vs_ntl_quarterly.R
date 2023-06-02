@@ -188,16 +188,16 @@ df_wide <- df_wide %>%
   mutate(gdp_div = gdp / 1000000,
          yr2021_onwards = as.numeric(year >= 2021))
 
-lm1 <- lm(gdp_div ~ ntl_bm_mean,           data = df_wide %>% filter(year %in% 2012:2020))
-lm2 <- lm(log(gdp_div) ~ log(ntl_bm_mean), data = df_wide %>% filter(year %in% 2012:2020))
-lm3 <- lm(gdp_div ~ ntl_bm_mean + yr2021_onwards,           data = df_wide %>% filter(year %in% 2012:2022))
-lm4 <- lm(log(gdp_div) ~ log(ntl_bm_mean) + yr2021_onwards, data = df_wide %>% filter(year %in% 2012:2022))
+lm1 <- lm(gdp ~ ntl_bm_mean,           data = df_wide %>% filter(year %in% 2012:2020))
+lm2 <- lm(log(gdp) ~ log(ntl_bm_mean), data = df_wide %>% filter(year %in% 2012:2020))
+lm3 <- lm(gdp ~ ntl_bm_mean + yr2021_onwards,           data = df_wide %>% filter(year %in% 2012:2022))
+lm4 <- lm(log(gdp) ~ log(ntl_bm_mean) + yr2021_onwards, data = df_wide %>% filter(year %in% 2012:2022))
 
 stargazer(lm1,
           lm2,
           lm3,
           lm4,
-          dep.var.labels = c("GDP (Billions)", "log(GDP)"),
+          dep.var.labels = c("GDP (Millions)", "log(GDP)","GDP (Millions)", "log(GDP)"),
           covariate.labels = c("NTL", "log(NTL)", "2020 Onwards"),
           omit.stat=c("LL","ser","f"),
           add.lines=list(c("Start Year", "2012", "2012", "2012", "2012"),
