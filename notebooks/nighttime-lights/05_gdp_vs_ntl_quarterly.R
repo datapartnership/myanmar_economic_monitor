@@ -21,7 +21,10 @@ ntl_df <- ntl_df %>%
   summarise(ntl_bm_mean = mean(ntl_bm_mean))
 
 # Load GDP ---------------------------------------------------------------------
-gdp_df <- read_xlsx(file.path(gdp_dir, "RawData", "GDP quarterly.xlsx"), 3)
+gdp_df <- read_xlsx(file.path(gdp_dir, "RawData", "2015based_RealGDP.xlsx"), 2)
+
+gdp_df <- gdp_df %>%
+  mutate(quarter = quarter %>% tolower())
 
 # Merge ------------------------------------------------------------------------
 df_wide <- ntl_df %>%
@@ -36,8 +39,8 @@ df_long <- df_long %>%
   mutate(value_log = log(value+1)) %>%
 
   group_by(name) %>%
-  mutate(value_start = value[(year == 2015) & (quarter == "q1")],
-         value_log_start = value_log[(year == 2015) & (quarter == "q1")]) %>%
+  mutate(value_start = value[(year == 2012) & (quarter == "q1")],
+         value_log_start = value_log[(year == 2012) & (quarter == "q1")]) %>%
   ungroup(name) %>%
 
   mutate(value_pc = (value - value_start)/value_start*100,
@@ -45,7 +48,7 @@ df_long <- df_long %>%
 
 ## Scatter
 df_wide %>%
-  ggplot(aes(x = constant_gdp, y = ntl_bm_mean)) +
+  ggplot(aes(x = gdp, y = ntl_bm_mean)) +
   geom_smooth(method='lm', formula= y~x, se=F, color = "darkorange") +
   geom_point(size = 3) +
   stat_cor(p.accuracy = 0.001, r.accuracy = 0.01) +
@@ -59,9 +62,9 @@ ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_scatter.png"),
 
 ## Scatter: Log
 df_wide %>%
-  mutate(constant_gdp = log(constant_gdp),
+  mutate(gdp = log(gdp),
          ntl_bm_mean = log(ntl_bm_mean)) %>%
-  ggplot(aes(x = constant_gdp, y = ntl_bm_mean)) +
+  ggplot(aes(x = gdp, y = ntl_bm_mean)) +
   geom_smooth(method='lm', formula= y~x, se=F, color = "darkorange") +
   geom_point(size = 3) +
   stat_cor(p.accuracy = 0.001, r.accuracy = 0.01) +
@@ -75,11 +78,10 @@ ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_scatter_log.png"),
 
 ## Trends
 df_long %>%
-  filter(name != "current_gdp",
-         year >= 2015,
-         year <= 2019) %>%
+  filter(year >= 2012,
+         year <= 2022) %>%
   mutate(name = case_when(
-    name == "constant_gdp" ~ "GDP",
+    name == "gdp" ~ "GDP",
     name == "ntl_bm_mean" ~ "Nighttime Lights"
   )) %>%
   ggplot(aes(x = date, y = value)) +
@@ -103,11 +105,10 @@ ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_trends.png"),
 
 ## Trends - Log
 df_long %>%
-  filter(name != "current_gdp",
-         year >= 2015,
-         year <= 2019) %>%
+  filter(year >= 2012,
+         year <= 2022) %>%
   mutate(name = case_when(
-    name == "constant_gdp" ~ "GDP (logged)",
+    name == "gdp" ~ "GDP (logged)",
     name == "ntl_bm_mean" ~ "Nighttime Lights (logged)"
   )) %>%
   ggplot(aes(x = date, y = value_log)) +
@@ -131,11 +132,10 @@ ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_trends_log.png"),
 
 ## Trends PC
 df_long %>%
-  filter(name != "current_gdp",
-         year >= 2015,
-         year <= 2019) %>%
+  filter(year >= 2012,
+         year <= 2022) %>%
   mutate(name = case_when(
-    name == "constant_gdp" ~ "GDP",
+    name == "gdp" ~ "GDP",
     name == "ntl_bm_mean" ~ "Nighttime Lights"
   )) %>%
   ggplot(aes(x = date, y = value_pc, color = name)) +
@@ -159,11 +159,10 @@ ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_trends_pc.png"),
 
 ## Trends PC - log
 df_long %>%
-  filter(name != "current_gdp",
-         year >= 2015,
-         year <= 2019) %>%
+  filter(year >= 2012,
+         year <= 2022) %>%
   mutate(name = case_when(
-    name == "constant_gdp" ~ "GDP (logged)",
+    name == "gdp" ~ "GDP (logged)",
     name == "ntl_bm_mean" ~ "Nighttime Lights (logged)"
   )) %>%
   ggplot(aes(x = date, y = value_log_pc, color = name)) +
@@ -185,14 +184,23 @@ ggsave(filename = file.path(fig_dir, "gdp_ntl_quarterly_trends_pc_log.png"),
        height = 3.5, width = 7)
 
 # Regression -------------------------------------------------------------------
-lm1 <- lm(constant_gdp ~ ntl_bm_mean, data = df_wide %>%
-            mutate(constant_gdp = constant_gdp / 1000000000))
-lm2 <- lm(log(constant_gdp) ~ log(ntl_bm_mean), data = df_wide)
+df_wide <- df_wide %>%
+  mutate(gdp_div = gdp / 1000000,
+         yr2021_onwards = as.numeric(year >= 2021))
+
+lm1 <- lm(gdp_div ~ ntl_bm_mean,           data = df_wide %>% filter(year %in% 2012:2020))
+lm2 <- lm(log(gdp_div) ~ log(ntl_bm_mean), data = df_wide %>% filter(year %in% 2012:2020))
+lm3 <- lm(gdp_div ~ ntl_bm_mean + yr2021_onwards,           data = df_wide %>% filter(year %in% 2012:2022))
+lm4 <- lm(log(gdp_div) ~ log(ntl_bm_mean) + yr2021_onwards, data = df_wide %>% filter(year %in% 2012:2022))
 
 stargazer(lm1,
           lm2,
+          lm3,
+          lm4,
           dep.var.labels = c("GDP (Billions)", "log(GDP)"),
-          covariate.labels = c("NTL", "log(NTL)"),
+          covariate.labels = c("NTL", "log(NTL)", "2020 Onwards"),
           omit.stat=c("LL","ser","f"),
+          add.lines=list(c("Start Year", "2012", "2012", "2012", "2012"),
+                         c("End Year", "2020", "2020", "2022", "2022")),
           type = "html",
           out = file.path(fig_dir, "reg_gdp_ntl_quarterly.html"))
