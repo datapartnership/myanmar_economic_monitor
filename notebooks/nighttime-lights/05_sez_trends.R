@@ -79,12 +79,12 @@ ntl_df %>%
              scales = "free_y",
              ncol = 2)
 
-ntl_df %>%
-  dplyr::filter(Name %in% c("Hlaingtharya Industrial Zone (1)",
-                            "Shwepyithar Industrial Zone (3)",
-                            "Mingaladon Industrial Zone",
-                            "Thilawa Industrial Zone")) %>%
-  write_csv("~/Desktop/sez_ntl_trends_select_zones_rawdata.csv")
+# ntl_df %>%
+#   dplyr::filter(Name %in% c("Hlaingtharya Industrial Zone (1)",
+#                             "Shwepyithar Industrial Zone (3)",
+#                             "Mingaladon Industrial Zone",
+#                             "Thilawa Industrial Zone")) %>%
+#   write_csv("~/Desktop/sez_ntl_trends_select_zones_rawdata.csv")
 
 ggsave(filename = file.path(fig_dir, "sez_ntl_trends_select_zones.png"),
        height = 4, width = 6)
