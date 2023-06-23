@@ -57,6 +57,38 @@ ntl_df %>%
 ggsave(filename = file.path(fig_dir, "sez_ntl_trends.png"),
        height = 20, width = 15)
 
+# Trends - Select Zones --------------------------------------------------------
+ntl_df %>%
+  dplyr::filter(Name %in% c("Hlaingtharya Industrial Zone (1)",
+                            "Shwepyithar Industrial Zone (3)",
+                            "Mingaladon Industrial Zone",
+                            "Thilawa Industrial Zone")) %>%
+  ggplot(aes(x = date, y = ntl_bm_mean)) +
+  geom_col() +
+  scale_x_continuous(labels = seq(2012, 2022, 4),
+                     breaks = seq(2012, 2022, 4)) +
+  labs(x = NULL,
+       y = NULL,
+       title = "Nighttime Lights: Special Economic Zones") +
+  theme_classic2() + 
+  theme(axis.title.y = element_text(angle = 0, vjust = 0.5),
+        plot.title = element_text(face = "bold",size = 16),
+        strip.text = element_text(face = "bold", size = 10),
+        strip.background = element_blank()) +
+  facet_wrap(~Name,
+             scales = "free_y",
+             ncol = 2)
+
+ntl_df %>%
+  dplyr::filter(Name %in% c("Hlaingtharya Industrial Zone (1)",
+                            "Shwepyithar Industrial Zone (3)",
+                            "Mingaladon Industrial Zone",
+                            "Thilawa Industrial Zone")) %>%
+  write_csv("~/Desktop/sez_ntl_trends_select_zones_rawdata.csv")
+
+ggsave(filename = file.path(fig_dir, "sez_ntl_trends_select_zones.png"),
+       height = 4, width = 6)
+
 # SEZ Aggregate Trends ---------------------------------------------------------
 ntl_df %>%
   group_by(date) %>%
@@ -101,7 +133,7 @@ ntl_sum_df <- ntl_df %>%
                       "50 - 100",
                       "100 - 150",
                       "> 150"))
-    ) 
+  ) 
 
 
 ggplot() +
