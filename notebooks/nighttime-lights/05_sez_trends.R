@@ -84,6 +84,7 @@ ntl_df %>%
 #                             "Shwepyithar Industrial Zone (3)",
 #                             "Mingaladon Industrial Zone",
 #                             "Thilawa Industrial Zone")) %>%
+#   dplyr::select(Name, date, ntl_bm_mean) %>%
 #   write_csv("~/Desktop/sez_ntl_trends_select_zones_rawdata.csv")
 
 ggsave(filename = file.path(fig_dir, "sez_ntl_trends_select_zones.png"),
