@@ -110,18 +110,29 @@ for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3")){
         if(product == "VNP46A2"){
           year <- r_name_i %>% substring(12,15) %>% as.numeric()
           day  <- r_name_i %>% substring(12,21)
-          date_r <- day %>% str_replace_all("_", "-") %>% ymd()
+          date_r <- r_name_i %>% 
+            str_replace_all("VNP46A2_t", "") %>% 
+            str_replace_all(".tif", "") %>% 
+            str_replace_all("_", "-") %>% 
+            paste0("-01") %>%
+            ymd()
         }
 
         if(product == "VNP46A3"){
-          year <- r_name_i %>% substring(12,15) %>% as.numeric()
-          day  <- r_name_i %>% substring(12,21)
-          date_r <- day %>% str_replace_all("_", "-") %>% ymd()
+          date_r <- r_name_i %>% 
+            str_replace_all("VNP46A3_t", "") %>% 
+            str_replace_all(".tif", "") %>% 
+            str_replace_all("_", "-") %>% 
+            paste0("-01") %>%
+            ymd()
         }
 
         if(product == "VNP46A4"){
           # Just grab year
-          date_r <- r_name_i %>% substring(12,15) %>% as.numeric()
+          date_r <- r_name_i %>% 
+            str_replace_all("VNP46A4_t", "") %>% 
+            str_replace_all(".tif", "") %>% 
+            as.numeric() 
         }
 
         roi_df$date <- date_r

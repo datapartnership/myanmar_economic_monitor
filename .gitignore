@@ -87,3 +87,4 @@ target/
 
 # Jupyter Book
 _build/
+.Rproj.user
