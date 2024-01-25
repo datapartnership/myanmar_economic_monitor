@@ -10,10 +10,17 @@ if(DELETE_DIR){
 
 # Prep SEZ ---------------------------------------------------------------------
 sez_sf <- read_sf(file.path(data_dir, "SEZ", "RawData", "industrial__special_economic_zones_sept2019.shp"))
-sez_sf <- sez_sf %>% st_buffer(dist = 2.5)
+sez_sf <- sez_sf %>% st_buffer(dist = 2500)
+
+border_df <- read_xlsx(file.path(data_dir, "Border Towns", "RawData", "Myanmar's Border Town Coordinates.xlsx"))
+border_sf <- border_df %>%
+  st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+
+border_1km_sf <- border_sf %>% st_buffer(dist = 1000)
+border_2_5km_sf <- border_sf %>% st_buffer(dist = 2500)
 
 # Loop through ROIs ------------------------------------------------------------
-for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3")){
+for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3", "border_1km", "border_2_5km")){
 
   if(adm_level == "sez"){
     roi_sf <- sez_sf
@@ -21,6 +28,10 @@ for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3")){
     roi_sf <- read_sf(file.path(data_dir, "Boundaries", "RawData", "mmr_polbnda_adm1_250k_mimu.shp"))
   } else if(adm_level == "bound2"){
     roi_sf <- read_sf(file.path(data_dir, "Boundaries", "RawData", "mmr_polbnda_adm2_250k_mimu_1.shp"))
+  } else if(adm_level == "border_1km"){
+    roi_sf <- border_1km_sf
+  } else if(adm_level == "border_2_5km"){
+    roi_sf <- border_2_5km_sf
   } else{
     roi_sf <- read_sf(file.path(gadm_dir, "rawdata", paste0("gadm41_MMR_",adm_level,".json")))
   }

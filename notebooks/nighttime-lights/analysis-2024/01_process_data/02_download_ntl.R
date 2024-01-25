@@ -11,7 +11,7 @@ roi_sf <- read_sf(file.path(gadm_dir, "rawdata", paste0("gadm41_MMR_",0,".json")
 # Download ---------------------------------------------------------------------
 bm_raster(roi_sf = roi_sf,
           product_id = "VNP46A4",
-          date = 2012:2022,
+          date = 2012:2023,
           bearer = bearer,
           output_location_type = "file",
           file_dir = file.path(ntl_bm_dir, "FinalData", "VNP46A4_rasters"))
