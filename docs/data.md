@@ -1,15 +1,13 @@
-# Foundational Datasets and Data Products Summary
+# Datasets and Data Products Summary
 
-## Foundational Datasets
+## Datasets
 
-**Foundational Datasets** refer to **all** datasets used in the analytics prepared for a project. The Foundational Datasets table includes a description of the data and their update frequency, as well as access links and contact information for questions about use and access. Users should not require any datasets not included in this table to complete the analytical work for the Data Good.
+**Datasets** refer to **all** datasets used in the analytics prepared for a project. The Datasets table includes a description of the data and their update frequency, as well as access links and contact information for questions about use and access. Users should not require any datasets not included in this table to complete the analytical work for the Data Good.
 
-Following is list of all Foundational Datasets used in this Data Good:
+Following is list of all Datasets used in this Data Good:
 
 ```{note}
-**Project Sharepoint** links are only accessible to the project team. For permissions to access these data, please write to the contact provided.
-
-The **Development Data Hub** is the World Bank's central data catalogue and includes meta-data and license information.
+**Project Sharepoint** links are only accessible to the project team. For permissions to access these data, please write to the contact provided. The **Development Data Hub** is the World Bank's central data catalogue and includes meta-data and license information.
 ```
 
 Where feasible, all datasets that can be obtained through the Development Data Hub have been placed in a special collection: *forthcoming*
