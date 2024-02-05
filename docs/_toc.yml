@@ -6,11 +6,11 @@ parts:
     numbered: False
     chapters:
       - file: reports/myanmar-economic-monitor-strategic-brief.md
-  - caption: Data Goods Overview and Foundational Data
+  - caption: Data Goods Overview
     numbered: False
     chapters:
       - file: docs/introduction_to_data_goods
-      - file: docs/foundational_datasets_and_data_products.md
+      - file: docs/data
   - caption: Data Products
     chapters:
       - file: notebooks/vegetation-conditions/README
