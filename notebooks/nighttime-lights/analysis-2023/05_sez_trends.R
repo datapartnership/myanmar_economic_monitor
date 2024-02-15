@@ -4,11 +4,11 @@
 roi     <- "admsez"
 product <- "VNP46A4"
 
-ntl_df <- readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated", 
+ntl_df <- readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                             paste0(roi, "_", product, ".Rds")))
 
 ## Sez
-sez_sf <- read_sf(file.path(data_dir, "SEZ", "RawData", 
+sez_sf <- read_sf(file.path(data_dir, "SEZ", "RawData",
                             "industrial__special_economic_zones_sept2019.shp"))
 
 sez_df <- st_coordinates(sez_sf) %>%
@@ -45,7 +45,7 @@ ntl_df %>%
   labs(x = NULL,
        y = NULL,
        title = "Nighttime Lights: Special Economic Zones") +
-  theme_classic2() + 
+  theme_classic2() +
   theme(axis.title.y = element_text(angle = 0, vjust = 0.5),
         plot.title = element_text(face = "bold",size = 16),
         strip.text = element_text(face = "bold", size = 10),
@@ -70,7 +70,7 @@ ntl_df %>%
   labs(x = NULL,
        y = NULL,
        title = "Nighttime Lights: Special Economic Zones") +
-  theme_classic2() + 
+  theme_classic2() +
   theme(axis.title.y = element_text(angle = 0, vjust = 0.5),
         plot.title = element_text(face = "bold",size = 16),
         strip.text = element_text(face = "bold", size = 10),
@@ -95,7 +95,7 @@ ntl_df %>%
   group_by(date) %>%
   dplyr::summarise(ntl_bm_mean = mean(ntl_bm_mean)) %>%
   ungroup() %>%
-  
+
   ggplot(aes(x = date, y = ntl_bm_mean)) +
   geom_col() +
   scale_x_continuous(labels = seq(2012, 2022, 4),
@@ -103,11 +103,11 @@ ntl_df %>%
   labs(x = NULL,
        y = NULL,
        title = "Nighttime Lights: Special Economic Zones (Average)") +
-  theme_classic2() + 
+  theme_classic2() +
   theme(axis.title.y = element_text(angle = 0, vjust = 0.5),
         plot.title = element_text(face = "bold",size = 16),
         strip.text = element_text(face = "bold", size = 10),
-        strip.background = element_blank()) 
+        strip.background = element_blank())
 
 ggsave(filename = file.path(fig_dir, "sez_ntl_trends_avg.png"),
        height = 4, width = 6)
@@ -120,7 +120,7 @@ ntl_sum_df <- ntl_df %>%
   ungroup() %>%
   mutate(ntl_bm_mean_22_12_chng = ntl_bm_mean_2022 - ntl_bm_mean_2012,
          ntl_bm_mean_22_12_pc = ntl_bm_mean_22_12_chng / ntl_bm_mean_2012) %>%
-  
+
   mutate(ntl_bm_mean_22_12_chng_cat = case_when(
     (ntl_bm_mean_22_12_chng >= -120) & (ntl_bm_mean_22_12_chng <= 0) ~ "< 0",
     (ntl_bm_mean_22_12_chng > 0) & (ntl_bm_mean_22_12_chng <= 50) ~ "0 - 50",
@@ -128,13 +128,13 @@ ntl_sum_df <- ntl_df %>%
     (ntl_bm_mean_22_12_chng > 100) & (ntl_bm_mean_22_12_chng <= 150) ~ "100 - 150",
     (ntl_bm_mean_22_12_chng > 150) ~ "> 150"
   ) %>%
-    
+
     factor(levels = c("< 0",
                       "0 - 50",
                       "50 - 100",
                       "100 - 150",
                       "> 150"))
-  ) 
+  )
 
 
 ggplot() +

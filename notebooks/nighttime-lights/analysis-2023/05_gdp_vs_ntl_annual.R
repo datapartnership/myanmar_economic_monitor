@@ -232,6 +232,3 @@ stargazer(lm1,
           omit.stat=c("LL","ser","f"),
           type = "html",
           out = file.path(fig_dir, "reg_gdp_ntl.html"))
-
-
-
