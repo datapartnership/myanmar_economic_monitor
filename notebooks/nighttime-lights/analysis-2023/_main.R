@@ -63,24 +63,22 @@ library(blackmarbler)
 # Run Scripts ------------------------------------------------------------------
 
 if(F){
-  
+
   ntl_git_dir <- file.path(git_dir, "notebooks", "nighttime-lights")
-  
+
   #### Cleaning
   source(file.path(ntl_git_dir, "01_clean_gas_flaring_data.R"))
   source(file.path(ntl_git_dir, "01_download_gadm.R"))
   source(file.path(ntl_git_dir, "02_download_black_marble.R"))
   source(file.path(ntl_git_dir, "03_aggregate.R"))
   source(file.path(ntl_git_dir, "04_append.R"))
-  
+
   #### Analysis
   source(file.path(ntl_git_dir, "05_adm_trends.R"))
   source(file.path(ntl_git_dir, "05_comparison_2019_maps.R"))
   source(file.path(ntl_git_dir, "05_map_ntl_annual_separate.R"))
   source(file.path(ntl_git_dir, "05_map_ntl_annual_together.R"))
-  
+
   source(file.path(ntl_git_dir, "05_gas_flaring_map.R"))
-  
+
 }
-
-

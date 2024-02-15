@@ -19,7 +19,3 @@ for(roi in c("adm0", "adm1", "adm2", "adm3", "admsez", "admbound2", "admbound1")
 
   }
 }
-
-
-
-

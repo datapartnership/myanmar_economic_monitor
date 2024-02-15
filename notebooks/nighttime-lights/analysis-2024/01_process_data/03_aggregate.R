@@ -35,28 +35,28 @@ for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3", "border_1km", 
   } else{
     roi_sf <- read_sf(file.path(gadm_dir, "rawdata", paste0("gadm41_MMR_",adm_level,".json")))
   }
-  
+
   # Loop through product -------------------------------------------------------
   # VNP46A2 = daily
   # VNP46A3 = monthly
   # VNP46A4 = annually
-  
-  for(product in c("VNP46A4", "VNP46A3")){ 
-    
+
+  for(product in c("VNP46A4", "VNP46A3")){
+
     ## Make directory to export files - organized by ROI and prduct
     OUT_DIR <- file.path(ntl_bm_dir, "FinalData", "aggregated", paste0("adm", adm_level, "_", product))
     dir.create(OUT_DIR)
-    
+
     # Loop through rasters -----------------------------------------------------
     r_name_vec <- file.path(ntl_bm_dir, "FinalData", paste0(product, "_rasters")) %>% list.files()
-    
+
     for(r_name_i in r_name_vec){
-      
+
       OUT_FILE <- file.path(OUT_DIR, r_name_i %>% str_replace_all(".tif", ".Rds"))
-      
+
       ## Check if file exists
       if(!file.exists(OUT_FILE)){
-        
+
         ## Load raster and create rasters for just gas flaring and non gas flaring locations
         r <- raster(file.path(ntl_bm_dir, "FinalData", paste0(product, "_rasters"), r_name_i))
 
@@ -65,7 +65,7 @@ for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3", "border_1km", 
         roi_sf$ntl_bm_mean   <- ntl_df$mean
         roi_sf$ntl_bm_median <- ntl_df$median
         roi_sf$ntl_bm_sum    <- ntl_df$sum
-        
+
         ## Prep for export
         roi_df <- roi_sf %>%
           st_drop_geometry()
@@ -74,38 +74,36 @@ for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3", "border_1km", 
         if(product == "VNP46A2"){
           year <- r_name_i %>% substring(12,15) %>% as.numeric()
           day  <- r_name_i %>% substring(12,21)
-          date_r <- r_name_i %>% 
-            str_replace_all("VNP46A2_t", "") %>% 
-            str_replace_all(".tif", "") %>% 
-            str_replace_all("_", "-") %>% 
+          date_r <- r_name_i %>%
+            str_replace_all("VNP46A2_t", "") %>%
+            str_replace_all(".tif", "") %>%
+            str_replace_all("_", "-") %>%
             paste0("-01") %>%
             ymd()
         }
-        
+
         if(product == "VNP46A3"){
-          date_r <- r_name_i %>% 
-            str_replace_all("VNP46A3_t", "") %>% 
-            str_replace_all(".tif", "") %>% 
-            str_replace_all("_", "-") %>% 
+          date_r <- r_name_i %>%
+            str_replace_all("VNP46A3_t", "") %>%
+            str_replace_all(".tif", "") %>%
+            str_replace_all("_", "-") %>%
             paste0("-01") %>%
             ymd()
         }
-        
+
         if(product == "VNP46A4"){
           # Just grab year
-          date_r <- r_name_i %>% 
-            str_replace_all("VNP46A4_t", "") %>% 
-            str_replace_all(".tif", "") %>% 
-            as.numeric() 
+          date_r <- r_name_i %>%
+            str_replace_all("VNP46A4_t", "") %>%
+            str_replace_all(".tif", "") %>%
+            as.numeric()
         }
-        
+
         roi_df$date <- date_r
-        
+
         ## Export
         saveRDS(roi_df, OUT_FILE)
       }
     }
   }
 }
-
-

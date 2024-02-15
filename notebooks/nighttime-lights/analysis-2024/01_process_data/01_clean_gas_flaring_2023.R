@@ -4,7 +4,7 @@
 # https://www.worldbank.org/en/programs/gasflaringreduction/global-flaring-data
 
 # Load data --------------------------------------------------------------------
-gf_df <- read_xlsx(file.path(gas_flare_dir, "RawData", 
+gf_df <- read_xlsx(file.path(gas_flare_dir, "RawData",
                              "GGFR-Flaring-Dashboard-Data-March292023.xlsx"))
 
 # Cleanup ----------------------------------------------------------------------
