@@ -148,7 +148,7 @@ ggplot() +
        caption = "Source: Veraset Movement Dataset") 
 ```
 
-![](plot_m_users_v2.png)
+![](images/plot_m_users_v2.png)
 
 For a more detailed view of the user distribution, two alternatives can
 be taken:
@@ -178,7 +178,7 @@ hexes %>%
        caption = "Source: Veraset Movement Dataset, WorldPop Population Density Raster")
 ```
 
-![](plot_wt_m_users_v2.png)
+![](images/plot_wt_m_users_v2.png)
 
 And in terms of 100 base index = 2022-03-01:
 
@@ -202,7 +202,7 @@ hexes %>%
        caption = "Source: Veraset Movement Dataset") 
 ```
 
-![](plot_index_v2.png)
+![](images/plot_index_v2.png)
 
 ## Spatial Analysis
 
@@ -227,7 +227,7 @@ index  %>%
   tm_facets("district", ncol = 3) -> tgrid
 ```
 
-![](plot_map_grid.png)
+![](images/plot_map_grid.png)
 
 # Correlation with Night Lights
 
@@ -272,7 +272,7 @@ ggplot(lights, aes(n, light)) +
 ggsave("plot_correlation.png", width = 8, height = 6, units = "in", dpi = 300)
 ```
 
-![](plot_correlation.png)
+![](images/plot_correlation.png)
 
 And in night lights visualization mode:
 
@@ -283,7 +283,7 @@ ggplot(r_2022 %>% as.data.frame(xy = TRUE))+
   theme_void()
 ```
 
-![](plot_lights.png)
+![](images/plot_lights.png)
 
 # Conclusions
 
