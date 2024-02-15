@@ -1,0 +1,47 @@
+[build-system]
+requires = ["hatchling>=1.21.0", "hatch-vcs>=0.3.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "myanmar-economic-monitor"
+description = "Support for the Myanmar Economic Monitor"
+readme = { file = "README.md", content-type = "text/markdown" }
+license = { file = "LICENSE" }
+keywords = ["nighttime lights", "black marble", "world bank"]
+authors = [{ name = "World Bank Data Lab", email = "datalab@worldbank.org" }]
+maintainers = [
+	{ name = "Robert Marty", email = "rmarty@worldbank.org" },
+	{ name = "Sahiti Sarva", email = "ssarva@worldbank.org" },
+	{ name = "Gabriel Stefanini Vicente", email = "gvicente@worldbank.org" },
+]
+classifiers = [
+	"Development Status :: 3 - Alpha",
+	"Intended Audience :: Science/Research",
+	"Topic :: Scientific/Engineering",
+]
+requires-python = ">=3.10"
+dynamic = ["version"]
+
+[project.optional-dependencies]
+docs = [
+	"docutils==0.17.1",     # https://jupyterbook.org/en/stable/content/citations.html?highlight=docutils#citations-and-bibliographies
+	"jupyter-book>=0.15.1",
+]
+[project.urls]
+"Homepage" = "https://datapartnership.github.io/myanmar-economic-monitor"
+"Bug Reports" = "https://github.com/datapartnership/myanmar-economic-monitor/issues"
+"Source" = "https://github.com/datapartnership/myanmar-economic-monitor"
+
+[tool.codespell]
+skip = 'docs/_build,docs/references.bib,*.py,*.R,*.png,*.gz,*.whl'
+ignore-words-list = "gost"
+ignore-regex = '^\s*"image\/png":\s.*'
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/myanmar-economic-monitor"]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
