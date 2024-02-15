@@ -16,6 +16,7 @@ parts:
       - file: notebooks/vegetation-conditions/README
       - file: notebooks/nighttime-lights/README
       - file: notebooks/conflict/acled.ipynb
+      - file: notebooks/mobility/README
   - caption: Sample Indicators and Insights
     chapters:
       - file: docs/sample-indicators
