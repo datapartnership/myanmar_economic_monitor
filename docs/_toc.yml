@@ -17,6 +17,7 @@ parts:
       - file: notebooks/nighttime-lights/analysis-2023/README.md
       - file: notebooks/nighttime-lights/analysis-2024/README.md
       - file: notebooks/conflict/acled.ipynb
+      - file: notebooks/mobility/README
   - caption: Sample Indicators and Insights
     chapters:
       - file: docs/sample-indicators
