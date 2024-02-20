@@ -13,6 +13,7 @@ parts:
       - file: docs/data
   - caption: Data Products
     chapters:
+      - file: notebooks/relative-wealth/relative-wealth-index.ipynb
       - file: notebooks/vegetation-conditions/README
       - file: notebooks/nighttime-lights/analysis-2023/README.md
       - file: notebooks/nighttime-lights/analysis-2024/README.md
