@@ -2,6 +2,7 @@
 
 # Filepaths --------------------------------------------------------------------
 db_dir <- file.path("~", "Dropbox", "World Bank", "Side Work", "Myanmar Economic Monitor")
+git_dir <- file.path("~", "Documents", "Github", "myanmar-economic-monitor")
 
 data_dir      <- file.path(db_dir, "data")
 ntl_bm_dir    <- file.path(data_dir, "Nighttime Lights BlackMarble")
@@ -9,6 +10,8 @@ gas_flare_dir <- file.path(data_dir, "Global Gas Flaring 2023")
 gadm_dir      <- file.path(data_dir, "GADM")
 gdp_dir       <- file.path(data_dir, "GDP")
 wdi_dir       <- file.path(data_dir, "WDI")
+
+fig_dir <- file.path(git_dir, "reports", "figures")
 
 # Packages ---------------------------------------------------------------------
 library(dplyr)

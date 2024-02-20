@@ -14,7 +14,8 @@ parts:
   - caption: Data Products
     chapters:
       - file: notebooks/vegetation-conditions/README
-      - file: notebooks/nighttime-lights/README
+      - file: notebooks/nighttime-lights/analysis-2023/README.md
+      - file: notebooks/nighttime-lights/analysis-2024/README.md
       - file: notebooks/conflict/acled.ipynb
   - caption: Sample Indicators and Insights
     chapters:
