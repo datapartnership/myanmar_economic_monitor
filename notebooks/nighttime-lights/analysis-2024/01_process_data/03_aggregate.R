@@ -18,9 +18,18 @@ border_sf <- border_df %>%
 
 border_1km_sf <- border_sf %>% st_buffer(dist = 1000)
 border_2_5km_sf <- border_sf %>% st_buffer(dist = 2500)
+border_5km_sf <- border_sf %>% st_buffer(dist = 5000)
+border_10km_sf <- border_sf %>% st_buffer(dist = 10000)
+
+source("https://raw.githubusercontent.com/ramarty/fast-functions/master/R/functions_in_chunks.R")
+rwi_df <- read_csv(file.path(data_dir, "Relative Wealth", "MMR_relative_wealth_index.csv"))
+rwi_sf <- st_as_sf(x = rwi_df, coords = c("longitude", "latitude"), crs = 4326)
+rwi_buff_sf <- rwi_sf %>% st_buffer_chunks(dist = 1200, chunk_size = 500)
 
 # Loop through ROIs ------------------------------------------------------------
-for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3", "border_1km", "border_2_5km")){
+for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3", 
+                   "border_1km", "border_2_5km", "border_5km", "border_10km",
+                   "rwi")){
 
   if(adm_level == "sez"){
     roi_sf <- sez_sf
@@ -32,6 +41,12 @@ for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3", "border_1km", 
     roi_sf <- border_1km_sf
   } else if(adm_level == "border_2_5km"){
     roi_sf <- border_2_5km_sf
+  } else if(adm_level == "border_5km"){
+    roi_sf <- border_5km_sf
+  } else if(adm_level == "border_10km"){
+    roi_sf <- border_10km_sf
+  } else if(adm_level == "rwi"){
+    roi_sf <- rwi_buff_sf
   } else{
     roi_sf <- read_sf(file.path(gadm_dir, "rawdata", paste0("gadm41_MMR_",adm_level,".json")))
   }

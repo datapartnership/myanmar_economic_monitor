@@ -13,47 +13,43 @@ adm3_df <- readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
 sez_df <- readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                             paste0("admsez", "_", "VNP46A4", ".Rds")))
 
-border_df <- readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
-                               paste0("admborder_1km", "_", "VNP46A4", ".Rds")))
+border_df <- bind_rows(
+  readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
+                    paste0("admborder_1km", "_", "VNP46A4", ".Rds"))) %>%
+    mutate(buffer = 1),
+  
+  readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
+                    paste0("admborder_2_5km", "_", "VNP46A4", ".Rds"))) %>%
+    mutate(buffer = 2.5),
+  
+  readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
+                    paste0("admborder_5km", "_", "VNP46A4", ".Rds"))) %>%
+    mutate(buffer = 5),
+  
+  readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
+                    paste0("admborder_10km", "_", "VNP46A4", ".Rds"))) %>%
+    mutate(buffer = 10)
+)
 
-# Filter -----------------------------------------------------------------------
-# clean_data <- function(df){
-#   df %>%
-#     mutate(year = date %>% year(),
-#            month = date %>% month()) %>%
-#     filter(month != 12,
-#            year >= 2019)
-# }
-#
-# adm1_df <- adm1_df %>%
-#   clean_data() %>%
-#   group_by(year, NAME_1) %>%
-#   dplyr::summarise(across(c(ntl_bm_sum, ntl_bm_mean, ntl_bm_median), mean)) %>%
-#   ungroup()
-#
-# adm2_df <- adm2_df %>%
-#   clean_data() %>%
-#   group_by(year, NAME_1, NAME_2) %>%
-#   dplyr::summarise(across(c(ntl_bm_sum, ntl_bm_mean, ntl_bm_median), mean)) %>%
-#   ungroup()
-#
-# adm3_df <- adm3_df %>%
-#   clean_data() %>%
-#   group_by(year, NAME_1, NAME_2, NAME_3) %>%
-#   dplyr::summarise(across(c(ntl_bm_sum, ntl_bm_mean, ntl_bm_median), mean)) %>%
-#   ungroup()
-#
-# sez_df <- sez_df %>%
-#   clean_data() %>%
-#   group_by(year, Name) %>%
-#   dplyr::summarise(across(c(ntl_bm_sum, ntl_bm_mean, ntl_bm_median), mean)) %>%
-#   ungroup()
-#
-# border_df <- border_df %>%
-#   clean_data() %>%
-#   group_by(year, Name) %>%
-#   dplyr::summarise(across(c(ntl_bm_sum, ntl_bm_mean, ntl_bm_median), mean)) %>%
-#   ungroup()
+border_df <- border_df %>%
+  mutate(border_country = case_when(
+    border_town == "Kan Paik Ti" ~ "China",
+    border_town == "Lwegel" ~ "China",
+    border_town == "Mese" ~ "Thailand",
+    border_town == "Myawaddy" ~ "Thailand",
+    border_town == "Rihkhawdar" ~ "India",
+    border_town == "Thantlang" ~ "India",
+    border_town == "Tamu" ~ "India",
+    border_town == "Myeik" ~ "Port",
+    border_town == "Kawthoung" ~ "Thailand",
+    border_town == "Sittwe" ~ "Port",
+    border_town == "Maungdaw" ~ "Bangladesh",
+    border_town == "Muse" ~ "China",
+    border_town == "Chinshwehaw" ~ "China",
+    border_town == "Kengtung" ~ "China", ## ?? Not exactly on border. Thailand too?
+    border_town == "Tachileik" ~ "Thailand"
+  )) %>%
+  mutate(buffer = factor(buffer))
 
 # Trends -----------------------------------------------------------------------
 theme_manual <- theme_classic2() + 
@@ -116,11 +112,49 @@ sez_df %>%
 ggsave(filename = file.path(fig_dir, "ntl_sez_avg.png"),
        height = 2.5, width = 6)
 
-# Other ------------------------------------------------------------------------
+# Border -----------------------------------------------------------------------
+## Individual
 border_df %>%
-  ggplot(aes(x = date, y = ntl_bm_sum)) +
-  geom_col() +
+  group_by(date, buffer) %>%
+  dplyr::summarise(ntl_bm_sum = sum(ntl_bm_sum)) %>%
+  ungroup() %>%
+  
+  ggplot(aes(x = date, y = ntl_bm_sum, color = buffer)) +
+  geom_line() +
+  labs(color = "Buffer (km)") +
+  labs(x = NULL,
+       y = "NTL Radiance",
+       title = "Nighttime lights across border locations") +
+  theme_manual
+
+ggsave(filename = file.path(fig_dir, "ntl_border_overall.png"),
+       height = 6, width = 10)
+
+## Country
+border_df %>%
+  group_by(date, buffer, border_country) %>%
+  dplyr::summarise(ntl_bm_sum = sum(ntl_bm_sum)) %>%
+  ungroup() %>%
+  
+  ggplot(aes(x = date, y = ntl_bm_sum, color = buffer)) +
+  geom_line() +
+  facet_wrap(~border_country) +
+  labs(color = "Buffer (km)") +
+  labs(x = NULL,
+       y = "NTL Radiance",
+       title = "Nighttime lights across border locations") +
+  theme_manual
+
+ggsave(filename = file.path(fig_dir, "ntl_border_country.png"),
+       height = 6, width = 10)
+
+
+## Individual
+border_df %>%
+  ggplot(aes(x = date, y = ntl_bm_sum, color = buffer)) +
+  geom_line() +
   facet_wrap(~border_town, scales = "free_y") +
+  labs(color = "Buffer (km)") +
   labs(x = NULL,
        y = "NTL Radiance",
        title = "Average nighttime lights across border locations") +
@@ -128,6 +162,8 @@ border_df %>%
 
 ggsave(filename = file.path(fig_dir, "ntl_border.png"),
        height = 6, width = 10)
+
+# ADM --------------------------------------------------------------------------
 
 adm1_df %>%
   ggplot(aes(x = date, y = ntl_bm_sum)) +
