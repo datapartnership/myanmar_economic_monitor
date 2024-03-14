@@ -17,15 +17,15 @@ border_df <- bind_rows(
   readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                     paste0("admborder_1km", "_", "VNP46A4", ".Rds"))) %>%
     mutate(buffer = 1),
-  
+
   readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                     paste0("admborder_2_5km", "_", "VNP46A4", ".Rds"))) %>%
     mutate(buffer = 2.5),
-  
+
   readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                     paste0("admborder_5km", "_", "VNP46A4", ".Rds"))) %>%
     mutate(buffer = 5),
-  
+
   readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                     paste0("admborder_10km", "_", "VNP46A4", ".Rds"))) %>%
     mutate(buffer = 10)
@@ -52,7 +52,7 @@ border_df <- border_df %>%
   mutate(buffer = factor(buffer))
 
 # Trends -----------------------------------------------------------------------
-theme_manual <- theme_classic2() + 
+theme_manual <- theme_classic2() +
   theme(strip.background = element_blank())
 
 # SEZ Individual ---------------------------------------------------------------
@@ -60,7 +60,7 @@ sez_df <- sez_df %>%
   mutate(Name_id = Name %>%
            as.factor() %>%
            as.numeric())
-  
+
 sez_df %>%
   dplyr::filter(Name_id %in% 1:30) %>%
   ggplot(aes(x = date, y = ntl_bm_sum)) +
@@ -118,7 +118,7 @@ border_df %>%
   group_by(date, buffer) %>%
   dplyr::summarise(ntl_bm_sum = sum(ntl_bm_sum)) %>%
   ungroup() %>%
-  
+
   ggplot(aes(x = date, y = ntl_bm_sum, color = buffer)) +
   geom_line() +
   labs(color = "Buffer (km)") +
@@ -135,7 +135,7 @@ border_df %>%
   group_by(date, buffer, border_country) %>%
   dplyr::summarise(ntl_bm_sum = sum(ntl_bm_sum)) %>%
   ungroup() %>%
-  
+
   ggplot(aes(x = date, y = ntl_bm_sum, color = buffer)) +
   geom_line() +
   facet_wrap(~border_country) +
