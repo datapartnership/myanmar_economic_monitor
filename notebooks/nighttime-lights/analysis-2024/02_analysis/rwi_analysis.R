@@ -9,13 +9,13 @@ rwi_df <- readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
 rwi_df <- rwi_df %>%
   mutate(ntl_bm_sum_ln = log(ntl_bm_sum + 1))
 
-rwi_df$rwi_q4 <- rwi_df$rwi %>% 
-  quantcut(q = 4, na.rm = TRUE) %>% 
+rwi_df$rwi_q4 <- rwi_df$rwi %>%
+  quantcut(q = 4, na.rm = TRUE) %>%
   as.numeric() %>%
   factor()
 
-rwi_df$rwi_q5 <- rwi_df$rwi %>% 
-  quantcut(q = 5, na.rm = TRUE) %>% 
+rwi_df$rwi_q5 <- rwi_df$rwi %>%
+  quantcut(q = 5, na.rm = TRUE) %>%
   as.numeric() %>%
   factor()
 
@@ -50,7 +50,7 @@ rwi_df %>%
              scales = "free_y") +
   labs(x = NULL,
        y = "Nighttime lights radiance",
-       title = "Nighttime lights by RWI quantile") + 
+       title = "Nighttime lights by RWI quantile") +
   theme_classic2() +
   theme(strip.background = element_blank())
 

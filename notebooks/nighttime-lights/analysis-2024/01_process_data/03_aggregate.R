@@ -27,7 +27,7 @@ rwi_sf <- st_as_sf(x = rwi_df, coords = c("longitude", "latitude"), crs = 4326)
 rwi_buff_sf <- rwi_sf %>% st_buffer_chunks(dist = 1200, chunk_size = 500)
 
 # Loop through ROIs ------------------------------------------------------------
-for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3", 
+for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3",
                    "border_1km", "border_2_5km", "border_5km", "border_10km",
                    "rwi")){
 
