@@ -403,7 +403,7 @@ nonsez_df %>%
   geom_col() +
   labs(x = NULL,
        y = "NTL Radiance",
-       title = "Average nighttime lights across Myanmar, excluding special economic zones") +
+       title = "Average nighttime lights across Myanmar,\nexcluding special economic zones") +
   theme_manual
 ```
 
@@ -737,4 +737,6 @@ ntl_gdp_df %>%
 
 ```
 
+# Limitations
 
+Nighttime lights are a common data source for measuring local economic activity. However, it is a proxy that is strongly—although imperfectly—correlated with measures of interest, such as population, local GDP, and wealth. Consequently, care must be taken in interpreting reasons for changes in nighttime lights.
