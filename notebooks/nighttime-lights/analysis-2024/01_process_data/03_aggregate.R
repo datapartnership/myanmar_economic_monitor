@@ -32,7 +32,7 @@ adm0_rm_border_5km_sf   <- st_difference(adm0_sf, border_5km_sf %>% st_union())
 adm0_rm_border_10km_sf  <- st_difference(adm0_sf, border_10km_sf %>% st_union())
 
 # Loop through ROIs ------------------------------------------------------------
-for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3", 
+for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3",
                    "border_1km", "border_2_5km", "border_5km", "border_10km",
                    #"rwi",
                    "0_rm_sez",

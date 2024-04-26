@@ -14,7 +14,7 @@ We extract average nighttime lights within different units in Myanmar. We distin
 
 Code to download and aggregate nighttime lights data can be found [here](https://github.com/datapartnership/myanmar-economic-monitor/tree/main/notebooks/nighttime-lights/analysis-2024/01_process_data).
 
-This notebook uses the processed data for analysis
+The main script ([_main.R](https://github.com/datapartnership/myanmar-economic-monitor/tree/main/notebooks/nighttime-lights/analysis-2024/_main.R)) loads all packages and runs all scripts for the analysis.
 
 ## Findings
 
