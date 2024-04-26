@@ -8,13 +8,13 @@ We use nighttime lights data from the VIIRS Black Marble dataset. Raw nighttime 
 
 ## Methodology
 
-We extract average nighttime lights within different units in Mynamar. We distinguish lights between lights observed in gas flaring locations and lights in other locations. Oil extraction and production involves gas flaring, which produces significant volumes of light. Separately examining lights in gas flaring and other locations allows distinguishing between lights generated due to oil production versus other sources of human activity. We use data on the locations of gas flaring sites from the [Global Gas Flaring Reduction Partnership](https://www.worldbank.org/en/programs/gasflaringreduction); we remove lights within 5km of gas flaring sites.
+We extract average nighttime lights within different units in Myanmar. We distinguish lights between lights observed in gas flaring locations and lights in other locations. Oil extraction and production involves gas flaring, which produces significant volumes of light. Separately examining lights in gas flaring and other locations allows distinguishing between lights generated due to oil production versus other sources of human activity. We use data on the locations of gas flaring sites from the [Global Gas Flaring Reduction Partnership](https://www.worldbank.org/en/programs/gasflaringreduction); we remove lights within 5km of gas flaring sites.
 
 ## Implementation
 
-Code to replicate the analysis can be found [here](https://github.com/datapartnership/myanmar-economic-monitor/tree/ntl/notebooks/nighttime-lights).
+Code to download and aggregate nighttime lights data can be found [here](https://github.com/datapartnership/myanmar-economic-monitor/tree/main/notebooks/nighttime-lights/analysis-2024/01_process_data).
 
-The main script ([_main.R](https://github.com/datapartnership/myanmar-economic-monitor/tree/main/notebooks/nighttime-lights/analysis-2024/_main.R)) loads all packages and runs all scripts for the analysis. 
+This notebook uses the processed data for analysis
 
 ## Findings
 
