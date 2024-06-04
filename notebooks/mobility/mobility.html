@@ -414,7 +414,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#about-veraset-movement-data">About Veraset Movement Data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#veraset-sample">Veraset Sample</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#number-of-users-across-the-years">Number of Users across the years</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id-type">ID type</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pings-per-user-distribution">Pings per user distribution</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pings-per-user-across-each-month">Pings per user across each month</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#users-suitable-for-a-longitudinal-analysis">Users suitable for a longitudinal analysis</a></li>
@@ -470,15 +469,6 @@ document.write(`
 </div>
 </div>
 </section>
-<section id="id-type">
-<h3>ID type<a class="headerlink" href="#id-type" title="Permalink to this heading">#</a></h3>
-<div class="cell tag_remove-input docutils container">
-</div>
-<div class="cell tag_remove-input docutils container">
-</div>
-<div class="cell tag_remove-input docutils container">
-</div>
-</section>
 <section id="pings-per-user-distribution">
 <h3>Pings per user distribution<a class="headerlink" href="#pings-per-user-distribution" title="Permalink to this heading">#</a></h3>
 <p>We also studied the number of pings (connections) a user had across the years to understand whether the data can be used for longitudinal analysis. The two boxplots below are showing the same information but the boxplot on the right has limited its x-axis to 100 so that we can observe with greater detail users that had less than a 100 pings across the 4 years. We can observe that 75% of users had less than 28 pings across the 4 years.</p>
@@ -517,7 +507,7 @@ dtype: float64
 </section>
 <section id="users-suitable-for-a-longitudinal-analysis">
 <h3>Users suitable for a longitudinal analysis<a class="headerlink" href="#users-suitable-for-a-longitudinal-analysis" title="Permalink to this heading">#</a></h3>
-<p>In order to perform a longitudinal analysis, we are filtering the data to keep only useres that had at least 30 pings in a month, which are around 2,500,000.
+<p>In order to perform a longitudinal analysis, we are filtering the data to keep only useres that had at least 30 pings in a month, which are around 1,300,000.
 Then, we check for how many months these users keep these level of connection intensity. We observe that 75% of the users were able to keep the 30 pings per month for less than 2 months of the total 51 months. None of the users were able to keep the 30 pings per month across the 4 years.</p>
 <p>Records where pings per user are greater than 30</p>
 <div class="cell tag_remove-input docutils container">
@@ -670,7 +660,6 @@ Then, we compared the two variables with the conflict index by region. At first 
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#about-veraset-movement-data">About Veraset Movement Data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#veraset-sample">Veraset Sample</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#number-of-users-across-the-years">Number of Users across the years</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id-type">ID type</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pings-per-user-distribution">Pings per user distribution</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pings-per-user-across-each-month">Pings per user across each month</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#users-suitable-for-a-longitudinal-analysis">Users suitable for a longitudinal analysis</a></li>
