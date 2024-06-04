@@ -1,0 +1,741 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Activity proxies in Myanmar</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.5ea377869091fd0449014c60fc090103.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/mobility/mobility';</script>
+    <link rel="canonical" href="https://github.com/datapartnership/myanmar-economic-monitor/notebooks/mobility/mobility.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Estimating Activity Using Mobility Data" href="activity.html" />
+    <link rel="prev" title="Armed Conflict Location and Event Data Analysis" href="../conflict/acled.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Jun 04, 2024"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../README.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt=" - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt=" - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Strategic Brief</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../reports/myanmar-economic-monitor-strategic-brief.html">Data Lab Strategic Brief: Myanmar Economic Monitor</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Data Goods Overview</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../docs/data.html">Datasets and Data Products Summary</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Data Products</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../relative-wealth/relative-wealth-index.html">Demographics of Myanmar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vegetation-conditions/README.html">Monitoring vegetation conditions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../nighttime-lights/analysis-2023/README.html">Nighttime Lights 2023 Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conflict/acled.html">Armed Conflict Location and Event Data Analysis</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Activity proxies in Myanmar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="activity.html">Estimating Activity Using Mobility Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Sample Indicators and Insights</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../docs/sample-indicators.html">Sample Indicators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sample-indicators/sagaing-story.html">The Story of Sagaing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Acknowledgements</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../docs/team.html">Data Goods Team and Acknowledgements</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/datapartnership/myanmar-economic-monitor" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/datapartnership/myanmar-economic-monitor/edit/main/notebooks/mobility/mobility.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/datapartnership/myanmar-economic-monitor/issues/new?title=Issue%20on%20page%20%2Fnotebooks/mobility/mobility.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/mobility/mobility.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Activity proxies in Myanmar</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#about-veraset-movement-data">About Veraset Movement Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#veraset-sample">Veraset Sample</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#number-of-users-across-the-years">Number of Users across the years</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id-type">ID type</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pings-per-user-distribution">Pings per user distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pings-per-user-across-each-month">Pings per user across each month</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#users-suitable-for-a-longitudinal-analysis">Users suitable for a longitudinal analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pings-by-date">Pings by date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#by-region">By region</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">Conclusions</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="activity-proxies-in-myanmar">
+<h1>Activity proxies in Myanmar<a class="headerlink" href="#activity-proxies-in-myanmar" title="Permalink to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>This document presents an assessment of Veraset data to be used as an estimation of Mobility in Myanmar.</p>
+</section>
+<section id="about-veraset-movement-data">
+<h2>About Veraset Movement Data<a class="headerlink" href="#about-veraset-movement-data" title="Permalink to this heading">#</a></h2>
+<p>Veraset Movement is an unfiltered stream of location and proximity data that Veraset has aggregated from data suppliers.</p>
+<p>How does Veraset source its data?</p>
+<p>Veraset sources data from direct relationships with third-party applications and software development kits (SDKs) as well as data aggregators. It is then cleansed for data sinks and other anomalies and deduplicated by event date. <a class="reference external" href="https://www.veraset.com/solutions/movement">Source</a></p>
+<p>Can Veraset reveal the sources of its data?</p>
+<p>While Veraset obtains data from a variety of sources, it does not typically disclose the specific sources of its data. This is to protect the privacy and confidentiality of its data providers. However, Veraset is committed to transparency and ensures that all its data is sourced in accordance with applicable laws and ethical guidelines.<a class="reference external" href="https://www.veraset.com/solutions/movement">Source</a></p>
+</section>
+<section id="veraset-sample">
+<h2>Veraset Sample<a class="headerlink" href="#veraset-sample" title="Permalink to this heading">#</a></h2>
+<p>This step creates an assessment of Veraset Movement Data for Maynmar between January 2020 to March 2024.</p>
+<section id="number-of-users-across-the-years">
+<h3>Number of Users across the years<a class="headerlink" href="#number-of-users-across-the-years" title="Permalink to this heading">#</a></h3>
+<p>The first step in the analysis consists on determining how many users were registered across the years in the region. From 2020 to March 2021, we observe considerable daily variations in number of users. Around March 2021, we observe a stark decline in number of users that might be related to the begining of internet restrictions. In October of 2021, we observe an increase in number of users that falls again around mid March of 2022, <strong>which might be related to changes policies about how location data is collected</strong>. After that, the number of users stayed stable and considerably low with respect to 2020.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../../_images/ff00c91adcb8597348c0ae901642c46655b856049da5fae072e8a10870a03b3f.png" src="../../_images/ff00c91adcb8597348c0ae901642c46655b856049da5fae072e8a10870a03b3f.png" />
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../../_images/c7e7e1172eef9084629530b705d578f3f77d18db04f47fae69d8653d1e7e8df3.png" src="../../_images/c7e7e1172eef9084629530b705d578f3f77d18db04f47fae69d8653d1e7e8df3.png" />
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../../_images/af81b9249b114ba9e26fb7f2b75615428ca2680661b182eac1d6dc167a2ec319.png" src="../../_images/af81b9249b114ba9e26fb7f2b75615428ca2680661b182eac1d6dc167a2ec319.png" />
+</div>
+</div>
+</section>
+<section id="id-type">
+<h3>ID type<a class="headerlink" href="#id-type" title="Permalink to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+</div>
+<div class="cell tag_remove-input docutils container">
+</div>
+<div class="cell tag_remove-input docutils container">
+</div>
+</section>
+<section id="pings-per-user-distribution">
+<h3>Pings per user distribution<a class="headerlink" href="#pings-per-user-distribution" title="Permalink to this heading">#</a></h3>
+<p>We also studied the number of pings (connections) a user had across the years to understand whether the data can be used for longitudinal analysis. The two boxplots below are showing the same information but the boxplot on the right has limited its x-axis to 100 so that we can observe with greater detail users that had less than a 100 pings across the 4 years. We can observe that 75% of users had less than 28 pings across the 4 years.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    7.132994e+06
+mean     1.204889e+02
+std      1.454482e+03
+min      1.000000e+00
+25%      2.000000e+00
+50%      7.000000e+00
+75%      2.800000e+01
+max      5.237190e+05
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../../_images/7cecca86a54b063679ad7a5a6dc187c0114c3758c352133331ded1a8e8c725ea.png" src="../../_images/7cecca86a54b063679ad7a5a6dc187c0114c3758c352133331ded1a8e8c725ea.png" />
+</div>
+</div>
+</section>
+<section id="pings-per-user-across-each-month">
+<h3>Pings per user across each month<a class="headerlink" href="#pings-per-user-across-each-month" title="Permalink to this heading">#</a></h3>
+<p>Next, we analyze the distribution of pings per users across each month. We can observe that across the years, most of the users in the sample have less than 30 ping per month which we could translate to approximately, less than 1 ping per day. Similar to what we did above, the second boxplot shows the same information as the first one but limited the x-axis to have a gretare detail in the area where most of the sample is concentrated, low number of pings per month.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-05-03 19:01:02,099 - distributed.worker.memory - WARNING - Unmanaged memory use is high. This may indicate a memory leak or the memory may not be released to the OS; see https://distributed.dask.org/en/latest/worker-memory.html#memory-not-released-back-to-the-os for more information. -- Unmanaged memory: 87.28 GiB -- Worker memory limit: 124.46 GiB
+</pre></div>
+</div>
+<img alt="../../_images/1ca46a25ac27dfa62b7fc3d53246bda3afed1ccc5fb5a846c6520ad4a89098d4.png" src="../../_images/1ca46a25ac27dfa62b7fc3d53246bda3afed1ccc5fb5a846c6520ad4a89098d4.png" />
+</div>
+</div>
+</section>
+<section id="users-suitable-for-a-longitudinal-analysis">
+<h3>Users suitable for a longitudinal analysis<a class="headerlink" href="#users-suitable-for-a-longitudinal-analysis" title="Permalink to this heading">#</a></h3>
+<p>In order to perform a longitudinal analysis, we are filtering the data to keep only useres that had at least 30 pings in a month, which are around 2,500,000.
+Then, we check for how many months these users keep these level of connection intensity. We observe that 75% of the users were able to keep the 30 pings per month for less than 2 months of the total 51 months. None of the users were able to keep the 30 pings per month across the 4 years.</p>
+<p>Records where pings per user are greater than 30</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2569312
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">agg_by_year_month</span><span class="p">[</span><span class="n">agg_by_year_month</span><span class="p">[</span><span class="s2">&quot;pings/user&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;uid&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    1.345974e+06
+mean     1.908887e+00
+std      1.840105e+00
+min      1.000000e+00
+25%      1.000000e+00
+50%      1.000000e+00
+75%      2.000000e+00
+max      3.500000e+01
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pings-by-date">
+<h3>Pings by date<a class="headerlink" href="#pings-by-date" title="Permalink to this heading">#</a></h3>
+<p>Another way to assess the data is by studying the number of pings registered by date. The plot seems to be correlated with number of users per date. The orange line plots the 2nd of April when internet restrictions started according to this <a class="reference external" href="https://www.reuters.com/graphics/MYANMAR-POLITICS/INTERNET-RESTRICTION/rlgpdbreepo/">Source</a></p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../../_images/7b29d95b62db4d0ad3a9698d436d84a1a8c4f6b7ea64a2cbc57f0b360549e1ac.png" src="../../_images/7b29d95b62db4d0ad3a9698d436d84a1a8c4f6b7ea64a2cbc57f0b360549e1ac.png" />
+</div>
+</div>
+</section>
+<section id="by-region">
+<h3>By region<a class="headerlink" href="#by-region" title="Permalink to this heading">#</a></h3>
+<p>Finally, we studied the number of pings by date and number of users by date across four regions:</p>
+<ul class="simple">
+<li><p>The North: Kachin, Shan (North)</p></li>
+<li><p>The Central: Sagaing, Magway, Mandalay</p></li>
+<li><p>The South: Mon, Kayin, Kayah, Tanintharyi, Bago (East)</p></li>
+<li><p>The West: Rakhine, Chin</p></li>
+<li><p>The Other: Yangon, Ayeyarwady,Nay Pyi Taw, Bago (West), Shan (South), Shan (East)
+Then, we compared the two variables with the conflict index by region. At first sight, there does not seem to be a correlation between neither number of pings nor number of users with conflict index.</p></li>
+</ul>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../../_images/28d5688d393a204da0a2fe31db6cfb2eb772356a3919e3cd7840723ad6b4e3be.png" src="../../_images/28d5688d393a204da0a2fe31db6cfb2eb772356a3919e3cd7840723ad6b4e3be.png" />
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../../_images/a954dd52752202bd34fbb108227ef4ce2f131be955aecf199f656a41bc4f8006.png" src="../../_images/a954dd52752202bd34fbb108227ef4ce2f131be955aecf199f656a41bc4f8006.png" />
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../../_images/7ab036a59831a0fab480831dc387b274863dde39f7c2fe7d11ebfc4cb005f2b9.png" src="../../_images/7ab036a59831a0fab480831dc387b274863dde39f7c2fe7d11ebfc4cb005f2b9.png" />
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../../_images/236912247976c1c95e25fd42c3c71a6414ca73fd0a304987a155ccefb945f116.png" src="../../_images/236912247976c1c95e25fd42c3c71a6414ca73fd0a304987a155ccefb945f116.png" />
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../../_images/7be33e5db881e903daea776fb11181fcef613e136d9413be1f82fede1a92b9a4.png" src="../../_images/7be33e5db881e903daea776fb11181fcef613e136d9413be1f82fede1a92b9a4.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="conclusions">
+<h2>Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this heading">#</a></h2>
+<p>We observe that Veraset data varies considerably across the studied period. Unfortunately, we cannot attribute this to a cause, although we hypothesize that this could be related to restrictions to the internet access as well as changes in data collection policies.</p>
+<p>In order to use this data for mobility analysis we need to have users that have several connections per day and maintain the connection intensity across the months. Across the four years, the number of users suitable for these type of longitudinal analysis is low. However, the sample might be useful for shorter analysis timespans, subject to the analysis of the data in different timespans.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "venv"
+        },
+        kernelOptions: {
+            name: "venv",
+            path: "./notebooks/mobility"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'venv'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../conflict/acled.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Armed Conflict Location and Event Data Analysis</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="activity.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Estimating Activity Using Mobility Data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#about-veraset-movement-data">About Veraset Movement Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#veraset-sample">Veraset Sample</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#number-of-users-across-the-years">Number of Users across the years</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id-type">ID type</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pings-per-user-distribution">Pings per user distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pings-per-user-across-each-month">Pings per user across each month</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#users-suitable-for-a-longitudinal-analysis">Users suitable for a longitudinal analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pings-by-date">Pings by date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#by-region">By region</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">Conclusions</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By World Bank
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Jun 04, 2024.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <div>
+ Country borders or names do not necessarily reflect the World Bank Group’s official position. All maps are for illustrative purposes and do not imply the expression of any opinion on the part of the World Bank, concerning the legal status of any country or territory or concerning the delimitation of frontiers or boundaries
+</div>
+<div>
+    <b>All content (unless otherwise specified) is subject to the <a href="https://www.mozilla.org/en-US/MPL">Mozilla Public License.</a></b>
+</div>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
