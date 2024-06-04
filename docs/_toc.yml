@@ -19,6 +19,7 @@ parts:
       - file: notebooks/nighttime-lights/analysis-2024/02_analysis/ntl_analysis.html
       - file: notebooks/conflict/acled.ipynb
       - file: notebooks/mobility/mobility.ipynb
+      - file: notebooks/mobility/activity.ipynb
   - caption: Sample Indicators and Insights
     chapters:
       - file: docs/sample-indicators
