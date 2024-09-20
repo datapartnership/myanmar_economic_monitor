@@ -512,8 +512,8 @@ sez_df %>%
   geom_text(aes(label = ntl_bm_sum_round)) +
   labs(x = NULL,
        y = "NTL Radiance\n(Values in thousands)",
-       title = "Average nighttime lights across special economic zones") +
-  theme_manual
+       title = NULL) + # "Average nighttime lights across special economic zones"
+   theme_manual
 
 nonsez_df %>%
   mutate(ntl_bm_sum = ntl_bm_sum / 1000) %>%
@@ -523,7 +523,7 @@ nonsez_df %>%
   geom_text(aes(label = ntl_bm_sum_round)) +
   labs(x = NULL,
        y = "NTL Radiance\n(Values in thousands)",
-       title = "Average nighttime lights across Myanmar,\nexcluding special economic zones") +
+       title = NULL) + # "Average nighttime lights across Myanmar,\nexcluding special economic zones"
   theme_manual
 
 ```
@@ -838,7 +838,7 @@ ntl_gdp_df %>%
   geom_smooth(method = "lm",
               se = F) +
   stat_cor(p.accuracy = 0.001, r.accuracy = 0.01) +
-  labs(title = "Correlation between quarterly GDP and NTL",
+  labs(title = NULL, # "Correlation between quarterly GDP and NTL"
        x = "Nighttime lights, log",
        y = "GDP, log") +
   theme_manual
@@ -862,7 +862,7 @@ ntl_gdp_df %>%
   geom_smooth(method = "lm",
               se = F) +
   stat_cor(p.accuracy = 0.001, r.accuracy = 0.01) +
-  labs(title = "Correlation between quarterly GDP and NTL",
+  labs(title = NULL, # "Correlation between quarterly GDP and NTL"
        x = "Nighttime lights, log",
        y = "GDP, log") +
   theme_manual
@@ -887,7 +887,7 @@ ntl_gdp_df %>%
   geom_smooth(method = "lm",
               se = F) +
   stat_cor(p.accuracy = 0.001, r.accuracy = 0.01) +
-  labs(title = "Correlation between quarterly Manufacturing GDP and SEZ NTL",
+  labs(title = NULL, # "Correlation between quarterly Manufacturing GDP and SEZ NTL"
        x = "SEZ Nighttime lights, log",
        y = "Manufacturing GDP, log") +
   theme_manual
@@ -911,7 +911,7 @@ ntl_gdp_df %>%
   geom_smooth(method = "lm",
               se = F) +
   stat_cor(p.accuracy = 0.001, r.accuracy = 0.01) +
-  labs(title = "Correlation between GDP and non-border NTL",
+  labs(title = NULL, # "Correlation between GDP and non-border NTL"
        x = "Non-Border Nighttime lights, log",
        y = "GDP, log") +
   theme_manual
@@ -946,7 +946,7 @@ ntl_gdp_df %>%
   geom_smooth(method = "lm",
               se = F) +
   stat_cor(p.accuracy = 0.001, r.accuracy = 0.01) +
-  labs(title = "Correlation between quarterly Manufacturing GDP and SEZ NTL\nFirst Difference",
+  labs(title = NULL, # "Correlation between quarterly Manufacturing GDP and SEZ NTL\nFirst Difference"
        x = "SEZ Nighttime lights, log",
        y = "Manufacturing GDP, log") +
   theme_manual
@@ -981,7 +981,7 @@ ntl_gdp_df %>%
   geom_smooth(method = "lm",
               se = F) +
   stat_cor(p.accuracy = 0.001, r.accuracy = 0.01) +
-  labs(title = "Correlation between quarterly Manufacturing GDP and SEZ NTL\nFirst Difference (Using data up to 2020)",
+  labs(title = NULL, # "Correlation between quarterly Manufacturing GDP and SEZ NTL\nFirst Difference (Using data up to 2020)"
        x = "SEZ Nighttime lights, log",
        y = "Manufacturing GDP, log") +
   theme_manual
