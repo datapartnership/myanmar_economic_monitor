@@ -1,17 +1,48 @@
 # Support for the Myanmar Economic Monitor
 
-The Myanmar Macroeconomics, Trade and Investment team is responsible for undertaking macroeconomic surveillance of Myanmar and conducting analytical studies to guide economic policy and development, including the bi-annual Myanmar Economic Monitor. However, published data can be delayed or unreliable, making traditional macroeconomic monitoring a challenge.  
+## Assignment
 
-This repository includes a starter Stratefic Brief, which includes preliminary adviosry for the Task Team on:
+The Myanmar Prosperity team is responsible for undertaking macroeconomic surveillance of Myanmar and conducting analytical studies to guide economic policy and development, including the bi-annual Myanmar Economic Monitor. However, published data can be delayed or unreliable, making traditional macroeconomic monitoring a challenge. The Lab team was asked to investigate different sources of alternative data to help fill data gaps, covering such areas as conflict monitoring, crop production monitoring, analyzing trends in nighttime lights, and understanding changing patterns of population movement.
 
-- **Data Collection and Acquisition**. Identified data resources that could support the Monitor update.
 
-- **Data Management**. Recommendations for managing derived project datasets.
+## Data
 
-- **Data Analytics and Insight Dissemination**. A menu of proposals for analytical work that could be coordinated through the Lab network.
+The following datasets are used in this assignmet. Further details about each dataset -- licensing, frequency of updates, access instructions, etc. -- accompany each data product in which they were used (see below).
 
-Over time, datasets, code, and documentation will be added to the repository, supporting reproducibility and reusability of all work conducted in support of the Monitor.
+* [ACLED](https://worldbank.github.io/iraq-economic-monitoring/docs/2-data.html#(https://datacatalog.worldbank.org/int/search/dataset/0061835/acled---middle-east)) - Time-stamped, geolocated points where conflicts (protests, attacks, etc.) have occured, collected globally based on news and crowdsourced data.
+
+* [BlackMarble](http://blackmarble.gsfc.nasa.gov/) - Visible Infrared Imaging Radiometer Suite (VIIRS) Nighttime Lights from NASA.
+
+* [MODIS](https://modis.gsfc.nasa.gov/) - NASA's 'Modern Resolution Imaging Spectroradiometer' dataset, used to monitor changes in surface vegetation. 
+
+* [Veraset Movement Data](https://docs.datapartnership.org/partners/veraset/README.html). Veraset Movement is an unfiltered stream of location and proximity data that Veraset has aggregated from data suppliers. The data can be requested (for purchase) through the [Development Data Partnership](https://datapartnership.org/).
+
+  
+
+
+## Reusable Data Science Products
+
+The following data products are included in this project:
+
+* [Conflict Monitoring](https://datapartnership.org/myanmar-economic-monitor/notebooks/conflict/acled.html)
+
+* [Nighttime Lights Monitoring](https://datapartnership.org/myanmar-economic-monitor/notebooks/nighttime-lights/analysis-2023/README.html)
+
+* [Crop Monitoring](https://datapartnership.org/myanmar-economic-monitor/notebooks/vegetation-conditions/README.html)
+
+* [Activity Index](https://datapartnership.org/myanmar-economic-monitor/notebooks/mobility/activity.html#)
+
+  
+
+
 
 ## License
 
 This projects is licensed under the [**Mozilla Public License**](https://opensource.org/license/mpl-2-0/) - see the [LICENSE](LICENSE) file for details.
+
+
+
+
+## Code of Conduct
+
+The <span style="color:#3EACAD">template</span>  used to create this project maintains a [Code of Conduct](docs/CODE_OF_CONDUCT.md) to ensure an inclusive and respectful environment for everyone. Please adhere to it in all interactions within our community.
