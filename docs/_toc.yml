@@ -6,8 +6,9 @@ parts:
     numbered: False
     chapters:
       - file: reports/myanmar-economic-monitor-strategic-brief.md
-  - caption: Data Products
+  - caption: Analytics
     chapters:
+      - file: notebooks/2-analytics.md
       - file: notebooks/relative-wealth/relative-wealth-index.ipynb
       - file: notebooks/vegetation-conditions/README
       - file: notebooks/nighttime-lights/analysis-2023/README.md
