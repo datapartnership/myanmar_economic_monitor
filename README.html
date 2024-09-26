@@ -66,7 +66,7 @@
     <link rel="next" title="Data Lab Strategic Brief: Myanmar Economic Monitor" href="reports/myanmar-economic-monitor-strategic-brief.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Sep 21, 2024"/>
+    <meta name="docbuild:last-update" content="Sep 26, 2024"/>
   </head>
   
   
@@ -180,7 +180,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="reports/myanmar-economic-monitor-strategic-brief.html">Data Lab Strategic Brief: Myanmar Economic Monitor</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Data Products</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analytics</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="notebooks/relative-wealth/relative-wealth-index.html">Demographics of Myanmar</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/vegetation-conditions/README.html">Monitoring vegetation conditions</a></li>
@@ -195,7 +195,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Acknowledgements</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="docs/team.html">Data Goods Team and Acknowledgements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/team.html">Project Team and Acknowledgements</a></li>
 </ul>
 
     </div>
@@ -409,8 +409,13 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assignment">Assignment</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reusable-data-science-products">Reusable Data Science Products</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contents">Contents</a><ul class="nav section-nav flex-column">
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-availability-statement">Data Availability Statement</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#license">License</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-of-conduct">Code of Conduct</a></li>
 </ul>
@@ -430,6 +435,38 @@ document.write(`
 <h2>Assignment<a class="headerlink" href="#assignment" title="Permalink to this heading">#</a></h2>
 <p>The Myanmar Prosperity team is responsible for undertaking macroeconomic surveillance of Myanmar and conducting analytical studies to guide economic policy and development, including the bi-annual Myanmar Economic Monitor. However, published data can be delayed or unreliable, making traditional macroeconomic monitoring a challenge. The Lab team was asked to investigate different sources of alternative data to help fill data gaps, covering such areas as conflict monitoring, crop production monitoring, analyzing trends in nighttime lights, and understanding changing patterns of population movement.</p>
 </section>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Strategic Brief</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reports/myanmar-economic-monitor-strategic-brief.html">Data Lab Strategic Brief: Myanmar Economic Monitor</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Analytics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/relative-wealth/relative-wealth-index.html">Demographics of Myanmar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/vegetation-conditions/README.html">Monitoring vegetation conditions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/nighttime-lights/analysis-2023/README.html">Nighttime Lights 2023 Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/conflict/acled.html">Armed Conflict Location and Event Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/mobility/mobility.html">Activity proxies in Myanmar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/mobility/activity.html">Estimating Activity Using Mobility Data</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Sample Indicators and Insights</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/sample-indicators/sagaing-story.html">The Story of Sagaing</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Acknowledgements</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="docs/team.html">Project Team and Acknowledgements</a></li>
+</ul>
+</div>
+</section>
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Permalink to this heading">#</a></h2>
 <p>The following datasets are used in this assignmet. Further details about each dataset – licensing, frequency of updates, access instructions, etc. – accompany each data product in which they were used (see below).</p>
@@ -439,16 +476,10 @@ document.write(`
 <li><p><a class="reference external" href="https://modis.gsfc.nasa.gov/">MODIS</a> - NASA’s ‘Modern Resolution Imaging Spectroradiometer’ dataset, used to monitor changes in surface vegetation.</p></li>
 <li><p><a class="reference external" href="https://docs.datapartnership.org/partners/veraset/README.html">Veraset Movement Data</a>. Veraset Movement is an unfiltered stream of location and proximity data that Veraset has aggregated from data suppliers. The data can be requested (for purchase) through the <a class="reference external" href="https://datapartnership.org/">Development Data Partnership</a>.</p></li>
 </ul>
+<section id="data-availability-statement">
+<h3>Data Availability Statement<a class="headerlink" href="#data-availability-statement" title="Permalink to this heading">#</a></h3>
+<p>Restrictions may apply to the data that support the findings of this study. Data received from the private sector through the Development Data Partnership are subject to the terms and conditions of the data license agreement and the “Official Use Only” data classification. These data are available upon request through the <a class="reference external" href="https://datapartnership.org/">Development Data Partnership</a>. Licensing and access information for all other datasets are included in the documentation.</p>
 </section>
-<section id="reusable-data-science-products">
-<h2>Reusable Data Science Products<a class="headerlink" href="#reusable-data-science-products" title="Permalink to this heading">#</a></h2>
-<p>The following data products are included in this project:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://datapartnership.org/myanmar-economic-monitor/notebooks/conflict/acled.html">Conflict Monitoring</a></p></li>
-<li><p><a class="reference external" href="https://datapartnership.org/myanmar-economic-monitor/notebooks/nighttime-lights/analysis-2023/README.html">Nighttime Lights Monitoring</a></p></li>
-<li><p><a class="reference external" href="https://datapartnership.org/myanmar-economic-monitor/notebooks/vegetation-conditions/README.html">Crop Monitoring</a></p></li>
-<li><p><a class="reference external" href="https://datapartnership.org/myanmar-economic-monitor/notebooks/mobility/activity.html#">Activity Index</a></p></li>
-</ul>
 </section>
 <section id="license">
 <h2>License<a class="headerlink" href="#license" title="Permalink to this heading">#</a></h2>
@@ -456,16 +487,8 @@ document.write(`
 </section>
 <section id="code-of-conduct">
 <h2>Code of Conduct<a class="headerlink" href="#code-of-conduct" title="Permalink to this heading">#</a></h2>
-<p>The <span style="color:#3EACAD">template</span>  used to create this project maintains a <span class="xref myst">Code of Conduct</span> to ensure an inclusive and respectful environment for everyone. Please adhere to it in all interactions within our community.</p>
+<p>The World Bank Data Lab <span style="color:#3EACAD">template</span> used to create this project maintains a <span class="xref myst">Code of Conduct</span> to ensure an inclusive and respectful environment for everyone. Please adhere to it in all interactions within our community.</p>
 </section>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -524,8 +547,13 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assignment">Assignment</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reusable-data-science-products">Reusable Data Science Products</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contents">Contents</a><ul class="nav section-nav flex-column">
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-availability-statement">Data Availability Statement</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#license">License</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-of-conduct">Code of Conduct</a></li>
 </ul>
@@ -554,7 +582,7 @@ By World Bank
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Sep 21, 2024.
+  Last updated on Sep 26, 2024.
   <br/>
 </p>
   </div>

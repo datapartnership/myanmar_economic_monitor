@@ -4,6 +4,12 @@
 
 The Myanmar Prosperity team is responsible for undertaking macroeconomic surveillance of Myanmar and conducting analytical studies to guide economic policy and development, including the bi-annual Myanmar Economic Monitor. However, published data can be delayed or unreliable, making traditional macroeconomic monitoring a challenge. The Lab team was asked to investigate different sources of alternative data to help fill data gaps, covering such areas as conflict monitoring, crop production monitoring, analyzing trends in nighttime lights, and understanding changing patterns of population movement.
 
+## Contents
+
+```{tableofcontents}
+
+```
+
 
 ## Data
 
@@ -19,20 +25,9 @@ The following datasets are used in this assignmet. Further details about each da
 
   
 
+#### Data Availability Statement
 
-## Reusable Data Science Products
-
-The following data products are included in this project:
-
-* [Conflict Monitoring](https://datapartnership.org/myanmar-economic-monitor/notebooks/conflict/acled.html)
-
-* [Nighttime Lights Monitoring](https://datapartnership.org/myanmar-economic-monitor/notebooks/nighttime-lights/analysis-2023/README.html)
-
-* [Crop Monitoring](https://datapartnership.org/myanmar-economic-monitor/notebooks/vegetation-conditions/README.html)
-
-* [Activity Index](https://datapartnership.org/myanmar-economic-monitor/notebooks/mobility/activity.html#)
-
-  
+Restrictions may apply to the data that support the findings of this study. Data received from the private sector through the Development Data Partnership are subject to the terms and conditions of the data license agreement and the “Official Use Only” data classification. These data are available upon request through the [Development Data Partnership](https://datapartnership.org/). Licensing and access information for all other datasets are included in the documentation.
 
 
 
@@ -41,8 +36,6 @@ The following data products are included in this project:
 This projects is licensed under the [**Mozilla Public License**](https://opensource.org/license/mpl-2-0/) - see the [LICENSE](LICENSE) file for details.
 
 
-
-
 ## Code of Conduct
 
-The <span style="color:#3EACAD">template</span>  used to create this project maintains a [Code of Conduct](docs/CODE_OF_CONDUCT.md) to ensure an inclusive and respectful environment for everyone. Please adhere to it in all interactions within our community.
+The World Bank Data Lab <span style="color:#3EACAD">template</span> used to create this project maintains a [Code of Conduct](docs/CODE_OF_CONDUCT.md) to ensure an inclusive and respectful environment for everyone. Please adhere to it in all interactions within our community.
