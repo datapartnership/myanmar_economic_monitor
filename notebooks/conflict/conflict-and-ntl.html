@@ -185,6 +185,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../vegetation-conditions/README.html">Monitoring vegetation conditions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../nighttime-lights/analysis-2023/README.html">Nighttime Lights 2023 Analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="acled.html">Armed Conflict Location and Event Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://raw.githack.com/datapartnership/myanmar-economic-monitor/refs/heads/main/notebooks/nighttime-lights/analysis-2024-q4/nighttime_lights.html">https://raw.githack.com/datapartnership/myanmar-economic-monitor/refs/heads/main/notebooks/nighttime-lights/analysis-2024-q4/nighttime_lights.html</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Conflict and Nighttime Lights</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mobility/mobility.html">Activity proxies in Myanmar</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mobility/activity.html">Estimating Activity Using Mobility Data</a></li>
@@ -445,11 +446,13 @@ document.write(`
 <h2>Insights<a class="headerlink" href="#insights" title="Permalink to this heading">#</a></h2>
 <p>The following questions quide the data analysis -</p>
 <ul class="simple">
-<li><p><strong>Is there a direct correlation between Conflict Index and Nighttime Lights?</strong></p></li>
-<li><p><strong>How did NTL change in regions that saw high increase in conflict compared to 6 months prior?</strong></p></li>
-<li><p><strong>How is NTL different in EAO controlled areas and other regions?</strong></p></li>
+<li><p><strong>How is NTL different in EAO controlled areas and other regions?</strong>
+For this, we used the control map of Myanmar as of March 2024 released by the <a class="reference external" href="https://specialadvisorycouncil.org/wp-content/uploads/2024/05/SAC-M-Effective-Control-in-Myanmar-2024-Update-ENGLISH.pdf">Special Advisory Council</a>. The contestation and control is divided into 8 regions starting from ‘stable junta control’ to ‘complete resistance control’. We expect to see that the regions that have moved into ‘complete resistance control’ have also experienced high increase in conflict.</p></li>
+<li><p><strong>Is there a direct correlation between Conflict Index and Nighttime Lights?</strong>
+We did not find a direct correlation between the two variables at a national or township level.</p></li>
+<li><p><strong>How did NTL change in regions that saw high increase in conflict compared to 6 months prior?</strong>
+There is no direct correlation between the two variables found yet.</p></li>
 </ul>
-<p>For this, we used the control map of Myanmar as of March 2024 released by the <a class="reference external" href="https://specialadvisorycouncil.org/wp-content/uploads/2024/05/SAC-M-Effective-Control-in-Myanmar-2024-Update-ENGLISH.pdf">Special Advisory Council</a>. The contestation and control is divided into 8 regions starting from ‘stable junta control’ to ‘complete resistance control’. We expect to see that the regions that have moved into ‘complete resistance control’ have also experienced high increase in conflict.</p>
 <section id="nighttime-lights-in-eao-controlled-areas-vs-junta-controlled-areas">
 <h3>Nighttime Lights in EAO Controlled Areas Vs Junta Controlled Areas<a class="headerlink" href="#nighttime-lights-in-eao-controlled-areas-vs-junta-controlled-areas" title="Permalink to this heading">#</a></h3>
 <ul class="simple">
