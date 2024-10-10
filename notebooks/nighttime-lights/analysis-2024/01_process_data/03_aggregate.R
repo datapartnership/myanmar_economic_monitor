@@ -40,7 +40,7 @@ for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3",
                    "0_rm_border_2_5km",
                    "0_rm_border_5km",
                    "0_rm_border_10km")){
-  
+
   if(adm_level == "sez"){
     roi_sf <- sez_sf
   } else if(adm_level == "bound1"){
@@ -56,12 +56,12 @@ for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3",
   } else if(adm_level == "border_10km"){
     roi_sf <- border_10km_sf
   } else if(adm_level == "rwi"){
-    
+
     source("https://raw.githubusercontent.com/ramarty/fast-functions/master/R/functions_in_chunks.R")
     rwi_df <- read_csv(file.path(data_dir, "Relative Wealth", "MMR_relative_wealth_index.csv"))
     rwi_sf <- st_as_sf(x = rwi_df, coords = c("longitude", "latitude"), crs = 4326)
     rwi_buff_sf <- rwi_sf %>% st_buffer_chunks(dist = 1200, chunk_size = 500)
-    
+
     roi_sf <- rwi_buff_sf
   } else if(adm_level == "0_rm_sez"){
     roi_sf <- adm0_rm_sez_sf
@@ -76,41 +76,41 @@ for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3",
   } else{
     roi_sf <- read_sf(file.path(gadm_dir, "rawdata", paste0("gadm41_MMR_",adm_level,".json")))
   }
-  
+
   # Loop through product -------------------------------------------------------
   # VNP46A2 = daily
   # VNP46A3 = monthly
   # VNP46A4 = annually
-  
+
   for(product in c("VNP46A4", "VNP46A3")){
-    
+
     ## Make directory to export files - organized by ROI and prduct
     OUT_DIR <- file.path(ntl_bm_dir, "FinalData", "aggregated", paste0("adm", adm_level, "_", product))
     dir.create(OUT_DIR)
-    
+
     # Loop through rasters -----------------------------------------------------
     r_name_vec <- file.path(ntl_bm_dir, "FinalData", paste0(product, "_rasters")) %>% list.files()
-    
+
     for(r_name_i in r_name_vec){
-      
+
       OUT_FILE <- file.path(OUT_DIR, r_name_i %>% str_replace_all(".tif", ".Rds"))
-      
+
       ## Check if file exists
       if(!file.exists(OUT_FILE)){
-        
+
         ## Load raster and create rasters for just gas flaring and non gas flaring locations
         r <- raster(file.path(ntl_bm_dir, "FinalData", paste0(product, "_rasters"), r_name_i))
-        
+
         ## Extract data
         ntl_df <- exact_extract(r, roi_sf, fun = c("mean", "median", "sum"))
         roi_sf$ntl_bm_mean   <- ntl_df$mean
         roi_sf$ntl_bm_median <- ntl_df$median
         roi_sf$ntl_bm_sum    <- ntl_df$sum
-        
+
         ## Prep for export
         roi_df <- roi_sf %>%
           st_drop_geometry()
-        
+
         ## Add date
         if(product == "VNP46A2"){
           year <- r_name_i %>% substring(12,15) %>% as.numeric()
@@ -122,7 +122,7 @@ for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3",
             paste0("-01") %>%
             ymd()
         }
-        
+
         if(product == "VNP46A3"){
           date_r <- r_name_i %>%
             str_replace_all("VNP46A3_t", "") %>%
@@ -131,7 +131,7 @@ for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3",
             paste0("-01") %>%
             ymd()
         }
-        
+
         if(product == "VNP46A4"){
           # Just grab year
           date_r <- r_name_i %>%
@@ -139,9 +139,9 @@ for(adm_level in c("bound1", "bound2", "sez", "0", "1", "2", "3",
             str_replace_all(".tif", "") %>%
             as.numeric()
         }
-        
+
         roi_df$date <- date_r
-        
+
         ## Export
         saveRDS(roi_df, OUT_FILE)
       }

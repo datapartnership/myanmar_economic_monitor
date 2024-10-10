@@ -2,7 +2,7 @@
 title: "Nighttime Lights Analysis"
 author: "Data Lab"
 date: "4/18/2024"
-format: 
+format:
   html:
     toc: true
     code-fold: true
@@ -47,7 +47,7 @@ ntl_bm_dir     <- file.path(data_dir, "Nighttime Lights BlackMarble")
 sez_dir        <- file.path(data_dir, "SEZ")
 gadm_dir       <- file.path(data_dir, "GADM")
 
-theme_manual <- theme_classic2() + 
+theme_manual <- theme_classic2() +
   theme(strip.background = element_blank(),
         strip.text = element_text(face = "bold"),
         plot.title = element_text(face = "bold"))
@@ -65,7 +65,7 @@ We first show a map of nighttime lights. Most of the country is dark, with light
 #| message: false
 
 ## Load boundaries
-adm0_sf <- read_sf(file.path(boundaries_dir, 
+adm0_sf <- read_sf(file.path(boundaries_dir,
                              "RawData",
                              "mmr_polbnda_adm0_250k_mimu.shp"))
 
@@ -173,7 +173,7 @@ ggplot() +
 #| warning: false
 #| message: false
 
-adm3_sf <- read_sf(file.path(gadm_dir, 
+adm3_sf <- read_sf(file.path(gadm_dir,
                              "rawdata",
                              paste0("gadm41_MMR_",3,".json")))
 
@@ -209,7 +209,7 @@ adm3_sf %>%
                        breaks = c(-100, -50, 0, 50, 100),
                        labels = c("< -100", "-50", "0", "50", "> 100")) +
   theme_manual +
-  theme_void() 
+  theme_void()
 
 adm3_sf %>%
   dplyr::filter(date %in% 2023) %>%
@@ -263,7 +263,7 @@ census_df <- census_df %>%
   ungroup()
 
 ## ADM2 File
-adm2_sf <- read_sf(file.path(boundaries_dir, 
+adm2_sf <- read_sf(file.path(boundaries_dir,
                              "RawData",
                              "mmr_polbnda_adm2_250k_mimu_1.shp"))
 
@@ -290,7 +290,7 @@ adm2_sf <- adm2_sf %>%
 data_sf <- adm2_sf %>%
   dplyr::mutate(ntl_bm_sum_pc = ntl_bm_sum/both_sexes_7,
                 ntl_bm_sum_pc_2019 = ntl_bm_sum_2019/both_sexes_7) %>%
-  mutate(pc19 = (ntl_bm_sum_pc - ntl_bm_sum_pc_2019) / ntl_bm_sum_pc_2019 * 100) 
+  mutate(pc19 = (ntl_bm_sum_pc - ntl_bm_sum_pc_2019) / ntl_bm_sum_pc_2019 * 100)
 
 data_sf$pc19[data_sf$pc19 > 100] <- 100
 data_sf$pc19[data_sf$pc19 < -100] <- -100
@@ -312,7 +312,7 @@ data_sf %>%
                        breaks = c(-100, -50, 0, 50, 100),
                        labels = c("< -100", "-50", "0", "50", "> 100")) +
   theme_manual +
-  theme_void() 
+  theme_void()
 ```
 
 # Spatial Disparities
@@ -328,11 +328,11 @@ ntl1_df %>%
   group_by(date) %>%
   dplyr::mutate(ntl_bm_sum_yangon = ntl_bm_sum[ST == "Yangon"]) %>%
   ungroup() %>%
-  
+
   mutate(pc = (ntl_bm_sum - ntl_bm_sum_yangon)/ntl_bm_sum_yangon*100) %>%
-  
+
   dplyr::filter(date >= 2019) %>%
-  
+
   ggplot() +
   geom_histogram(aes(x = pc),
                  fill = "dodgerblue3",
@@ -349,11 +349,11 @@ ntl1_df %>%
   group_by(date) %>%
   dplyr::mutate(ntl_bm_sum_npt = ntl_bm_sum[ST == "Nay Pyi Taw"]) %>%
   ungroup() %>%
-  
+
   mutate(pc = (ntl_bm_sum - ntl_bm_sum_npt)/ntl_bm_sum_npt*100) %>%
-  
+
   dplyr::filter(date >= 2019) %>%
-  
+
   ggplot() +
   geom_histogram(aes(x = pc),
                  fill = "dodgerblue3",
@@ -538,7 +538,7 @@ sez_df %>%
   #dplyr::filter(Name_id %in% 1:30) %>%
   ggplot(aes(x = date, y = ntl_bm_sum)) +
   geom_col() +
-  facet_wrap(~Name, 
+  facet_wrap(~Name,
              scales = "free_y",
              ncol = 4) +
   labs(x = NULL,
@@ -579,15 +579,15 @@ border_df <- bind_rows(
   readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                     paste0("admborder_1km", "_", "VNP46A4", ".Rds"))) %>%
     mutate(buffer = 1),
-  
+
   readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                     paste0("admborder_2_5km", "_", "VNP46A4", ".Rds"))) %>%
     mutate(buffer = 2.5),
-  
+
   readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                     paste0("admborder_5km", "_", "VNP46A4", ".Rds"))) %>%
     mutate(buffer = 5),
-  
+
   readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                     paste0("admborder_10km", "_", "VNP46A4", ".Rds"))) %>%
     mutate(buffer = 10)
@@ -598,15 +598,15 @@ nonborder_df <- bind_rows(
   readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                     paste0("adm0_rm_border_1km", "_", "VNP46A4", ".Rds"))) %>%
     mutate(buffer = 1),
-  
+
   readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                     paste0("adm0_rm_border_2_5km", "_", "VNP46A4", ".Rds"))) %>%
     mutate(buffer = 2.5),
-  
+
   readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                     paste0("adm0_rm_border_5km", "_", "VNP46A4", ".Rds"))) %>%
     mutate(buffer = 5),
-  
+
   readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                     paste0("adm0_rm_border_10km", "_", "VNP46A4", ".Rds"))) %>%
     mutate(buffer = 10)
@@ -630,13 +630,13 @@ border_df <- border_df %>%
     border_town == "Chinshwehaw" ~ "China",
     border_town == "Kengtung" ~ "China", ## ?? Not exactly on border. Thailand too?
     border_town == "Tachileik" ~ "Thailand"
-  )) 
+  ))
 
 border_df %>%
   group_by(date, buffer) %>%
   dplyr::summarise(ntl_bm_sum = sum(ntl_bm_sum)) %>%
   ungroup() %>%
-  
+
   ggplot(aes(x = date, y = ntl_bm_sum, color = buffer)) +
   geom_line() +
   labs(color = "Buffer (km)") +
@@ -665,7 +665,7 @@ border_df %>%
   group_by(date, buffer, border_country) %>%
   dplyr::summarise(ntl_bm_sum = sum(ntl_bm_sum)) %>%
   ungroup() %>%
-  
+
   ggplot(aes(x = date, y = ntl_bm_sum, color = buffer)) +
   geom_line() +
   facet_wrap(~border_country, scales = "free_y") +
@@ -708,13 +708,13 @@ rwi_df <- readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
 rwi_df <- rwi_df %>%
   mutate(ntl_bm_sum_ln = log(ntl_bm_sum + 1))
 
-rwi_df$rwi_q4 <- rwi_df$rwi %>% 
-  quantcut(q = 4, na.rm = TRUE) %>% 
+rwi_df$rwi_q4 <- rwi_df$rwi %>%
+  quantcut(q = 4, na.rm = TRUE) %>%
   as.numeric() %>%
   factor()
 
-rwi_df$rwi_q5 <- rwi_df$rwi %>% 
-  quantcut(q = 5, na.rm = TRUE) %>% 
+rwi_df$rwi_q5 <- rwi_df$rwi %>%
+  quantcut(q = 5, na.rm = TRUE) %>%
   as.numeric() %>%
   factor()
 
@@ -742,7 +742,7 @@ rwi_df %>%
              scales = "free_y") +
   labs(x = NULL,
        y = "Nighttime lights radiance",
-       title = "Nighttime lights by RWI quantile") + 
+       title = "Nighttime lights by RWI quantile") +
   theme_classic2() +
   theme(strip.background = element_blank())
 
@@ -784,11 +784,11 @@ ntl_df <- bind_rows(
   readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                     paste0("adm0", "_", "VNP46A3", ".Rds"))) %>%
     mutate(unit = "Country"),
-  
+
   readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                     paste0("adm0_rm_border_10km", "_", "VNP46A3", ".Rds"))) %>%
     mutate(unit = "Country, Excluding Borders"),
-  
+
   readRDS(file.path(ntl_bm_dir, "FinalData", "aggregated",
                     paste0("admsez", "_", "VNP46A3", ".Rds"))) %>%
     mutate(unit = "SEZs")
@@ -850,12 +850,16 @@ ntl_gdp_df %>%
   dplyr::summarise(ntl_bm_sum = mean(ntl_bm_sum),
                    gdp = sum(gdp)) %>%
   ungroup() %>%
+<<<<<<< HEAD
   
   dplyr::mutate(gdp = log(gdp),
                 ntl_bm_sum = log(ntl_bm_sum)) %>%
   dplyr::filter(!is.na(gdp),
                 !is.na(ntl_bm_sum)) %>%
   
+=======
+
+>>>>>>> 3e8ee4f4b408019a25df70f5b7521f5e7c3199a3
   ggplot(aes(x = ntl_bm_sum,
              y = gdp)) +
   geom_point() +
@@ -875,12 +879,16 @@ ntl_gdp_df %>%
   dplyr::summarise(ntl_bm_sum = mean(ntl_bm_sum),
                    gdp = sum(gdp)) %>%
   ungroup() %>%
+<<<<<<< HEAD
   
   dplyr::mutate(gdp = log(gdp),
                 ntl_bm_sum = log(ntl_bm_sum)) %>%
   dplyr::filter(!is.na(gdp),
                 !is.na(ntl_bm_sum)) %>%
   
+=======
+
+>>>>>>> 3e8ee4f4b408019a25df70f5b7521f5e7c3199a3
   ggplot(aes(x = ntl_bm_sum,
              y = gdp)) +
   geom_point() +
@@ -899,12 +907,16 @@ ntl_gdp_df %>%
   dplyr::summarise(ntl_bm_sum = mean(ntl_bm_sum),
                    gdp = sum(gdp)) %>%
   ungroup() %>%
+<<<<<<< HEAD
   
   dplyr::mutate(gdp = log(gdp),
                 ntl_bm_sum = log(ntl_bm_sum)) %>%
   dplyr::filter(!is.na(gdp),
                 !is.na(ntl_bm_sum)) %>%
   
+=======
+
+>>>>>>> 3e8ee4f4b408019a25df70f5b7521f5e7c3199a3
   ggplot(aes(x = ntl_bm_sum,
              y = gdp)) +
   geom_point() +
