@@ -1,6 +1,6 @@
-# Data Goods Team and Acknowledgements
+# Project Team and Acknowledgements
 
-The Data Lab would like to express our sincere gratutude and appreciation for the colleagues who worked together to prepare this Data Goods package:
+The Data Lab would like to express our sincere gratutude and appreciation for the colleagues who worked together to prepare this project:
 
 | **Name**                                           | **Role**                                         | **Team**                    |
 | -------------------------------------------------- | ------------------------------------------------ | --------------------------- |

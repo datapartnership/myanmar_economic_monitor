@@ -6,13 +6,9 @@ parts:
     numbered: False
     chapters:
       - file: reports/myanmar-economic-monitor-strategic-brief.md
-  - caption: Data Goods Overview
-    numbered: False
+  - caption: Analytics
     chapters:
-      - file: docs/introduction_to_data_goods
-      - file: docs/data
-  - caption: Data Products
-    chapters:
+      - file: notebooks/2-analytics.md
       - file: notebooks/relative-wealth/relative-wealth-index.ipynb
       - file: notebooks/vegetation-conditions/README
       - file: notebooks/nighttime-lights/analysis-2023/README.md
@@ -22,8 +18,10 @@ parts:
       - file: notebooks/mobility/activity.ipynb
   - caption: Sample Indicators and Insights
     chapters:
-      - file: docs/sample-indicators
       - file: notebooks/sample-indicators/sagaing-story.ipynb
+  - caption: Additional Resources
+    chapters:
+      - file: docs/3-add-resources.md
   - caption: Acknowledgements
     chapters:
       - file: docs/team.md
