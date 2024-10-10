@@ -14,6 +14,7 @@ parts:
       - file: notebooks/nighttime-lights/analysis-2023/README.md
       - file: notebooks/nighttime-lights/analysis-2024/02_analysis/ntl_analysis.html
       - file: notebooks/conflict/acled.ipynb
+      - url: https://raw.githack.com/datapartnership/myanmar-economic-monitor/refs/heads/main/notebooks/nighttime-lights/analysis-2024-q4/nighttime_lights.html
       - file: notebooks/conflict/conflict-and-ntl.ipynb
       - file: notebooks/mobility/mobility.ipynb
       - file: notebooks/mobility/activity.ipynb
