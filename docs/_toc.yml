@@ -6,21 +6,22 @@ parts:
     numbered: False
     chapters:
       - file: reports/myanmar-economic-monitor-strategic-brief.md
-  - caption: Analytics
+  - caption: Myanmar Update 2023
     chapters:
       - file: notebooks/2-analytics.md
       - file: notebooks/relative-wealth/relative-wealth-index.ipynb
       - file: notebooks/vegetation-conditions/README
       - file: notebooks/nighttime-lights/analysis-2023/README.md
-      - file: notebooks/nighttime-lights/analysis-2024/02_analysis/ntl_analysis.html
+      #- file: notebooks/nighttime-lights/analysis-2024/02_analysis/ntl_analysis.html
       - file: notebooks/conflict/acled.ipynb
-      - url: https://raw.githack.com/datapartnership/myanmar-economic-monitor/refs/heads/main/notebooks/nighttime-lights/analysis-2024-q4/nighttime_lights.html
-      - file: notebooks/conflict/conflict-and-ntl.ipynb
+      - file: notebooks/sample-indicators/sagaing-story.ipynb
       - file: notebooks/mobility/mobility.ipynb
       - file: notebooks/mobility/activity.ipynb
-  - caption: Sample Indicators and Insights
+  - caption: Myanmar Update 2024
     chapters:
-      - file: notebooks/sample-indicators/sagaing-story.ipynb
+      - title: Nighttime Lights 2024 Update
+        url: https://raw.githack.com/datapartnership/myanmar-economic-monitor/refs/heads/main/notebooks/nighttime-lights/analysis-2024-q4/nighttime_lights.html
+      - file: notebooks/conflict/conflict-and-ntl.ipynb
   - caption: Additional Resources
     chapters:
       - file: docs/3-add-resources.md
