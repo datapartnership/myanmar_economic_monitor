@@ -34,6 +34,8 @@ iso3_code    <- "MMR"
 iso2_code    <- "MM"
 pc_base_year <- 2019
 
+MAKE_STATIC_MAP <- T
+
 #### Packages
 library(tidyverse)
 library(sf)
@@ -235,7 +237,7 @@ if(!file.exists(OUT_FILE_COUNTRY_SF)){
 ```
 
 
-## Download and Append gas flaring
+## Download and Append Gas Flaring
 
 We download and append gas flaring data from the [World Bank Global Gas Flaring Database](https://datacatalog.worldbank.org/search/dataset/0037743).
 
@@ -336,6 +338,46 @@ saveRDS(gs_10km_sf, file.path(gas_flare_dir, "finaldata", "gas_flare_locations_1
 ```
 
 
+## Industrial / Non-Industrial Zones
+
+```{r}
+
+OUT_PATH_NOINDZONE <- file.path(data_dir, "adm0_indzone", "adm0_noindzone.Rds")
+
+if(!file.exists(OUT_PATH_NOINDZONE)){
+  
+  indus_sf <- read_sf(file.path(data_dir, "Shapefiles",
+                                "industrial__special_economic_zones_sept2019",
+                                "industrial__special_economic_zones_sept2019.shp"))
+  
+  indus_sf <- indus_sf %>% st_buffer(dist = 5*1000)
+  
+  indus_sf <- indus_sf %>%
+    mutate(id = 1) %>%
+    group_by(id) %>%
+    dplyr::summarise(geometry = st_union(geometry)) %>%
+    ungroup()
+  
+  adm0_sf <- read_sf(file.path(data_dir, "Shapefiles", "Boundaries",
+                               "mmr_polbnda_adm0_250k_mimu.shp"))
+  
+  sf_use_s2(F)
+  adm0_indust_sf <- adm0_sf %>%
+    st_intersection(indus_sf)
+  
+  adm0_noindust_sf <- adm0_sf %>%
+    st_difference(indus_sf)
+  sf_use_s2(T)
+  
+  dir.create(file.path(data_dir, "adm0_indzone"))
+  
+  saveRDS(adm0_indust_sf, file.path(data_dir, "adm0_indzone", "adm0_indzone.Rds"))
+  saveRDS(adm0_noindust_sf, file.path(data_dir, "adm0_indzone", "adm0_noindzone.Rds"))
+}
+
+```
+
+
 ## Download Nighttime Lights
 
 ```{r}
@@ -382,6 +424,8 @@ for(unit in c("adm0",
               "mmr_adm2",
               "mmr_adm3",
               "induszone5km",
+              "adm0_induszone",
+              "adm0_noinduszone",
               "cities5km",
               "cities10km",
               "citiesbuff")){
@@ -445,6 +489,14 @@ for(unit in c("adm0",
                                       "industrial__special_economic_zones_sept2019.shp"))
           
           roi_sf <- roi_sf %>% st_buffer(dist = 5*1000)
+        }
+        
+        if(unit == "adm0_induszone"){
+          roi_sf <- readRDS(file.path(data_dir, "adm0_indzone", "adm0_indzone.Rds"))
+        }
+        
+        if(unit == "adm0_noinduszone"){
+          roi_sf <- readRDS(file.path(data_dir, "adm0_indzone", "adm0_noindzone.Rds"))
         }
         
         if(unit == "cities5km"){
@@ -520,6 +572,8 @@ for(unit in c("adm0",
               "mmr_adm2",
               "mmr_adm3",
               "induszone5km",
+              "adm0_induszone",
+              "adm0_noinduszone",
               "cities5km",
               "cities10km",
               "citiesbuff")){
@@ -619,51 +673,54 @@ leaflet() %>%
 #| fig-width: 10
 #| fig-height: 10
 
-## Load boundaries
-adm0_sf <- load_gadm(0)
-
-## Elevation
-elev_r <- rast(file.path(data_dir, "elevation", "elev.tiff"))
-slope_r <- terrain(elev_r)
-slope_r <- slope_r %>% mask(adm0_sf)
-
-## Latest Year
-r <- rast(file.path(ntl_bm_dir, "rasters", "annual",
-                    paste0("VNP46A4_NearNadir_Composite_Snow_Free_qflag_t",2023,".tif")))
-r <- r %>% mask(adm0_sf)
-
-r[][r[] <= 1] <- NA
-r[] <- log(r[] + 1)
-r[] <- log(r[] + 1)
-
-ocean_colors <- ocean.deep(100)
-ocean_colors[98:100] <- "#FFFFFF"
-
-ggplot() +
-  geom_spatraster(data = slope_r, 
-                  show.legend = FALSE,
-                  maxcell = 9e+07) +
-  scale_fill_gradient(low = "#49232E",
-                      high = "black",
-                      na.value = "transparent") +
-  ggnewscale::new_scale_fill() +
-  geom_spatraster(data = r,
-                  aes(fill = t2023),
-                  maxcell = 9e+07) +
-  scale_fill_gradientn(colors = ocean_colors,
-                       #midpoint = 2,
-                       na.value = "transparent") +
-  labs(fill = "Light Intensity",
-       title = "Nighttime Lights",
-       subtitle = 2023) +
-  coord_sf() +
-  theme_void() +
-  theme(plot.title = element_text(face = "bold", hjust = 0.5, size = 16),
-        plot.subtitle = element_text(face = "italic", hjust = 0.5, size = 16),
-        legend.position = c(0.2, 0.15)) +
-  guides(fill = guide_colorbar(direction = "horizontal",
-                               label = FALSE,         
-                               title.position = "top"))
+if(MAKE_STATIC_MAP){
+  
+  ## Load boundaries
+  adm0_sf <- load_gadm(0)
+  
+  ## Elevation
+  elev_r <- rast(file.path(data_dir, "elevation", "elev.tiff"))
+  slope_r <- terrain(elev_r)
+  slope_r <- slope_r %>% mask(adm0_sf)
+  
+  ## Latest Year
+  r <- rast(file.path(ntl_bm_dir, "rasters", "annual",
+                      paste0("VNP46A4_NearNadir_Composite_Snow_Free_qflag_t",2023,".tif")))
+  r <- r %>% mask(adm0_sf)
+  
+  r[][r[] <= 1] <- NA
+  r[] <- log(r[] + 1)
+  r[] <- log(r[] + 1)
+  
+  ocean_colors <- ocean.deep(100)
+  ocean_colors[98:100] <- "#FFFFFF"
+  
+  ggplot() +
+    geom_spatraster(data = slope_r, 
+                    show.legend = FALSE,
+                    maxcell = 9e+07) +
+    scale_fill_gradient(low = "#49232E",
+                        high = "black",
+                        na.value = "transparent") +
+    ggnewscale::new_scale_fill() +
+    geom_spatraster(data = r,
+                    aes(fill = t2023),
+                    maxcell = 9e+07) +
+    scale_fill_gradientn(colors = ocean_colors,
+                         #midpoint = 2,
+                         na.value = "transparent") +
+    labs(fill = "Light Intensity",
+         title = "Nighttime Lights",
+         subtitle = 2023) +
+    coord_sf() +
+    theme_void() +
+    theme(plot.title = element_text(face = "bold", hjust = 0.5, size = 16),
+          plot.subtitle = element_text(face = "italic", hjust = 0.5, size = 16),
+          legend.position = c(0.2, 0.15)) +
+    guides(fill = guide_colorbar(direction = "horizontal",
+                                 label = FALSE,         
+                                 title.position = "top"))
+}
 ```
 # Diagnostics
 
@@ -906,6 +963,10 @@ ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated",
                             paste0("ntl_", "adm0", "_", "annual", ".Rds")))
 
 ntl_df %>%
+  group_by(GID_0) %>%
+  dplyr::mutate(ntl_sum_base = ntl_sum[date == 2019]) %>%
+  ungroup() %>%
+  dplyr::mutate(ntl_sum = ntl_sum / ntl_sum_base * 100) %>%
   ggplot() +
   geom_col(aes(x = date, y = ntl_sum),
            fill = wbg_color_light) +
@@ -955,6 +1016,12 @@ top_adm <- ntl_df %>%
 
 ntl_df %>%
   filter(NAME_1 %in% top_adm) %>%
+  
+  group_by(NAME_1) %>%
+  dplyr::mutate(ntl_sum_base = ntl_sum[date == 2019]) %>%
+  ungroup() %>%
+  dplyr::mutate(ntl_sum = ntl_sum / ntl_sum_base * 100) %>%
+  
   ggplot() +
   geom_col(aes(x = date, y = ntl_sum),
            fill = wbg_color_light) +
@@ -1004,6 +1071,12 @@ top_adm <- ntl_df %>%
 
 ntl_df %>%
   filter(NAME_2 %in% top_adm) %>%
+  
+  group_by(NAME_2) %>%
+  dplyr::mutate(ntl_sum_base = ntl_sum[date == 2019]) %>%
+  ungroup() %>%
+  dplyr::mutate(ntl_sum = ntl_sum / ntl_sum_base * 100) %>%
+  
   ggplot() +
   geom_col(aes(x = date, y = ntl_sum),
            fill = wbg_color_light) +
@@ -1053,6 +1126,12 @@ top_adm <- ntl_df %>%
 
 ntl_df %>%
   filter(geoname_id %in% top_adm) %>%
+  
+  group_by(geoname_id) %>%
+  dplyr::mutate(ntl_sum_base = ntl_sum[date == 2019]) %>%
+  ungroup() %>%
+  dplyr::mutate(ntl_sum = ntl_sum / ntl_sum_base * 100) %>%
+  
   ggplot() +
   geom_col(aes(x = date, y = ntl_sum),
            fill = wbg_color_light) +
@@ -1206,31 +1285,49 @@ ggplot() +
 
 ## Annual
 ```{r}
-ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", "ntl_induszone5km_annual.Rds"))
+ntl_df <- bind_rows(
+  readRDS(file.path(ntl_bm_dir, "aggregated", "ntl_adm0_induszone_annual.Rds")) %>%
+    dplyr::mutate(type = "Industrial\nZones"),
+  
+  readRDS(file.path(ntl_bm_dir, "aggregated", "ntl_adm0_noinduszone_annual.Rds")) %>%
+    dplyr::mutate(type = "Excluding\nIndustrial\nZones")
+)
 
 ntl_df %>%
-  group_by(date) %>%
-  dplyr::summarise(ntl_sum = sum(ntl_sum, na.rm = T)) %>%
+  group_by(type) %>%
+  dplyr::mutate(ntl_sum_base = ntl_sum[date == 2019]) %>%
   ungroup() %>%
+  dplyr::mutate(ntl_sum = ntl_sum / ntl_sum_base * 100) %>%
   
   ggplot() +
   geom_col(aes(x = date,
-               y = ntl_sum))
+               y = ntl_sum)) +
+  theme_manual +
+  facet_wrap(~type) +
+  labs(x = NULL,
+       y = "NTL")
 ```
 
 ## Monthly
 ```{r}
-ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", "ntl_induszone5km_monthly.Rds"))
+ntl_df <- bind_rows(
+  readRDS(file.path(ntl_bm_dir, "aggregated", "ntl_adm0_induszone_monthly.Rds")) %>%
+    dplyr::mutate(type = "Industrial\nZones"),
+  
+  readRDS(file.path(ntl_bm_dir, "aggregated", "ntl_adm0_noinduszone_monthly.Rds")) %>%
+    dplyr::mutate(type = "Excluding\nIndustrial\nZones")
+)
 
 ntl_df %>%
   mutate(date = date %>% ymd()) %>%
-  group_by(date) %>%
-  dplyr::summarise(ntl_sum = sum(ntl_sum, na.rm = T)) %>%
-  ungroup() %>%
   
   ggplot() +
   geom_col(aes(x = date,
-               y = ntl_sum))
+               y = ntl_sum)) +
+  facet_wrap(~type) +
+  theme_manual +
+  labs(x = NULL,
+       y = "NTL")
 ```
 
 # Conflict vs Non Conflict Locations
@@ -1305,4 +1402,36 @@ ntl_conf_agg_df %>%
   theme_classic2()
 ```
 
+# Hpakant Township
+
+## Annual
+```{r}
+ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
+                            paste0("ntl_", "mmr_adm3", "_", "annual", ".Rds")))
+
+ntl_df %>%
+  dplyr::filter(TS %in% "Hpakant") %>%
+  ggplot(aes(x = date,
+             y = ntl_sum)) +
+  geom_col() +
+  theme_manual +
+  labs(x = NULL,
+       y = "NTL")
+```
+
+## Monthly
+```{r}
+ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
+                            paste0("ntl_", "mmr_adm3", "_", "monthly", ".Rds")))
+
+ntl_df %>%
+  dplyr::filter(TS %in% "Hpakant") %>%
+  dplyr::mutate(date = date %>% ymd()) %>%
+  ggplot(aes(x = date,
+             y = ntl_sum)) +
+  geom_col() +
+  labs(x = NULL,
+       y = "NTL") +
+  theme_manual 
+```
 
