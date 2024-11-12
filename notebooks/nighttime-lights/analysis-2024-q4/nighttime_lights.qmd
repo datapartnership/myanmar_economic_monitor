@@ -140,7 +140,7 @@ if(!file.exists(OUT_PATH)){
 }
 
 #### NTL Months to Download
-ntl_months <- seq.Date(ymd("2012-01-01"), to = ymd("2024-06-01"), by = "month") %>%
+ntl_months <- seq.Date(ymd("2012-01-01"), to = ymd("2024-09-01"), by = "month") %>%
   as.character()
 
 #### Colors
@@ -955,9 +955,7 @@ ntl_gdp_df %>%
 
 # Trends in Nighttime Lights
 
-## Annual
-
-### Country Level
+## Country Level
 ```{r}
 ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
                             paste0("ntl_", "adm0", "_", "annual", ".Rds")))
@@ -975,7 +973,6 @@ ntl_df %>%
        y = "Nighttime Lights") +
   theme_manual
 ```
-
 
 ```{r}
 ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
@@ -1003,7 +1000,56 @@ ntl_df %>%
   theme(legend.position = "top")
 ```
 
-### ADM 1: Top ADM Units
+```{r}
+ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
+                            paste0("ntl_", "adm0", "_", "monthly", ".Rds")))
+
+ntl_df %>%
+  dplyr::mutate(date = date %>% ymd()) %>%
+  dplyr::filter(date >= ymd("2020-01-01")) %>%
+  # group_by(GID_0) %>%
+  # dplyr::mutate(ntl_sum_base = ntl_sum[date == 2019]) %>%
+  # ungroup() %>%
+  # dplyr::mutate(ntl_sum = ntl_sum / ntl_sum_base * 100) %>%
+  ggplot() +
+  geom_col(aes(x = date, y = ntl_sum),
+           fill = wbg_color_light) +
+  facet_wrap(~COUNTRY) +
+  labs(x = NULL,
+       y = "Nighttime Lights") +
+  theme_manual
+```
+
+```{r}
+ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
+                            paste0("ntl_", "adm0", "_", "monthly", ".Rds")))
+
+ntl_df %>%
+  dplyr::mutate(date = date %>% ymd(),
+                month_i = date %>% month,
+                year_i = date %>% year) %>%
+  dplyr::filter(date >= ymd("2020-01-01")) %>%
+  
+  group_by(COUNTRY, month_i) %>%
+  dplyr::mutate(ntl_base = ntl_sum[year_i == 2020]) %>%
+  ungroup() %>%
+  dplyr::mutate(ntl_sum = ntl_sum / ntl_base) %>%
+  dplyr::filter(date >= ymd("2021-01-01")) %>%
+  # group_by(GID_0) %>%
+  # dplyr::mutate(ntl_sum_base = ntl_sum[date == 2019]) %>%
+  # ungroup() %>%
+  # dplyr::mutate(ntl_sum = ntl_sum / ntl_sum_base * 100) %>%
+  ggplot() +
+  geom_col(aes(x = date, y = ntl_sum),
+           fill = wbg_color_light) +
+  facet_wrap(~COUNTRY) +
+  labs(x = NULL,
+       y = "Nighttime Lights",
+       title = "Monthly - Indexed") +
+  theme_manual
+```
+
+## ADM 1: Top ADM Units
 ```{r}
 ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
                             paste0("ntl_", "adm1", "_", "annual", ".Rds")))
@@ -1058,7 +1104,62 @@ ntl_df %>%
   theme(legend.position = "top")
 ```
 
-### ADM 2: Top ADM Units
+```{r}
+ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
+                            paste0("ntl_", "adm1", "_", "monthly", ".Rds")))
+
+ntl_df %>%
+  dplyr::mutate(date = date %>% ymd()) %>%
+  dplyr::filter(date >= ymd("2020-01-01")) %>%
+  filter(NAME_1 %in% top_adm) %>%
+  
+  # group_by(NAME_1) %>%
+  # dplyr::mutate(ntl_sum_base = ntl_sum[date == 2019]) %>%
+  # ungroup() %>%
+  # dplyr::mutate(ntl_sum = ntl_sum / ntl_sum_base * 100) %>%
+  
+  ggplot() +
+  geom_col(aes(x = date, y = ntl_sum),
+           fill = wbg_color_light) +
+  facet_wrap(~NAME_1) +
+  labs(x = NULL,
+       y = "Nighttime Lights") +
+  theme_manual 
+```
+
+```{r}
+ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
+                            paste0("ntl_", "adm1", "_", "monthly", ".Rds")))
+
+ntl_df %>%
+  dplyr::mutate(date = date %>% ymd(),
+                month_i = date %>% month(),
+                year_i = date %>% year()) %>%
+  dplyr::filter(date >= ymd("2020-01-01")) %>%
+  filter(NAME_1 %in% top_adm) %>%
+  
+  group_by(NAME_1, month_i) %>%
+  dplyr::mutate(ntl_base = mean(ntl_sum[year_i == 2020])) %>%
+  ungroup() %>%
+  dplyr::mutate(ntl_sum = ntl_sum / ntl_base) %>%
+  dplyr::filter(date >= ymd("2021-01-01")) %>%
+  
+  # group_by(NAME_1) %>%
+  # dplyr::mutate(ntl_sum_base = ntl_sum[date == 2019]) %>%
+  # ungroup() %>%
+  # dplyr::mutate(ntl_sum = ntl_sum / ntl_sum_base * 100) %>%
+  
+  ggplot() +
+  geom_col(aes(x = date, y = ntl_sum),
+           fill = wbg_color_light) +
+  facet_wrap(~NAME_1) +
+  labs(x = NULL,
+       y = "Nighttime Lights",
+       title = "Monthly - Indexed") +
+  theme_manual 
+```
+
+## ADM 2: Top ADM Units
 ```{r}
 ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
                             paste0("ntl_", "adm2", "_", "annual", ".Rds")))
@@ -1113,7 +1214,63 @@ ntl_df %>%
   theme(legend.position = "top")
 ```
 
-### Top Cities
+```{r}
+ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
+                            paste0("ntl_", "adm2", "_", "monthly", ".Rds")))
+
+ntl_df %>%
+  filter(NAME_2 %in% top_adm) %>%
+  dplyr::mutate(date = date %>% ymd()) %>%
+  dplyr::filter(date >= ymd("2020-01-01")) %>%
+  
+  # group_by(NAME_2) %>%
+  # dplyr::mutate(ntl_sum_base = ntl_sum[date == 2019]) %>%
+  # ungroup() %>%
+  # dplyr::mutate(ntl_sum = ntl_sum / ntl_sum_base * 100) %>%
+  
+  ggplot() +
+  geom_col(aes(x = date, y = ntl_sum),
+           fill = wbg_color_light) +
+  facet_wrap(~NAME_2) +
+  labs(x = NULL,
+       y = "Nighttime Lights") +
+  theme_manual
+```
+
+```{r}
+ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
+                            paste0("ntl_", "adm2", "_", "monthly", ".Rds")))
+
+ntl_df %>%
+  dplyr::mutate(date = date %>% ymd(),
+                month_i = date %>% month(),
+                year_i = date %>% year()) %>%
+  dplyr::filter(date >= ymd("2020-01-01")) %>%
+  filter(NAME_2 %in% top_adm) %>%
+  
+  group_by(NAME_2, month_i) %>%
+  dplyr::mutate(ntl_base = mean(ntl_sum[year_i == 2020])) %>%
+  ungroup() %>%
+  dplyr::mutate(ntl_sum = ntl_sum / ntl_base) %>%
+  dplyr::filter(date >= ymd("2021-01-01")) %>%
+  
+  # group_by(NAME_1) %>%
+  # dplyr::mutate(ntl_sum_base = ntl_sum[date == 2019]) %>%
+  # ungroup() %>%
+  # dplyr::mutate(ntl_sum = ntl_sum / ntl_sum_base * 100) %>%
+  
+  ggplot() +
+  geom_col(aes(x = date, y = ntl_sum),
+           fill = wbg_color_light) +
+  facet_wrap(~NAME_1) +
+  labs(x = NULL,
+       y = "Nighttime Lights",
+       title = "Monthly - Indexed") +
+  theme_manual 
+```
+
+## Top Cities
+
 ```{r}
 ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
                             paste0("ntl_", "citiesbuff", "_", "annual", ".Rds")))
@@ -1168,6 +1325,120 @@ ntl_df %>%
   theme_manual +
   theme(legend.position = "top")
 ```
+
+```{r}
+ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
+                            paste0("ntl_", "citiesbuff", "_", "monthly", ".Rds")))
+
+ntl_df %>%
+  dplyr::mutate(date = date %>% ymd()) %>%
+  dplyr::filter(date >= ymd("2020-01-01")) %>%
+  filter(geoname_id %in% top_adm) %>%
+  
+  # group_by(geoname_id) %>%
+  # dplyr::mutate(ntl_sum_base = ntl_sum[date == 2019]) %>%
+  # ungroup() %>%
+  # dplyr::mutate(ntl_sum = ntl_sum / ntl_sum_base * 100) %>%
+  
+  ggplot() +
+  geom_col(aes(x = date, y = ntl_sum),
+           fill = wbg_color_light) +
+  facet_wrap(~name) +
+  labs(x = NULL,
+       y = "Nighttime Lights") +
+  theme_manual
+```
+
+```{r}
+ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
+                            paste0("ntl_", "citiesbuff", "_", "monthly", ".Rds")))
+
+ntl_df %>%
+  dplyr::mutate(date = date %>% ymd(),
+                month_i = date %>% month(),
+                year_i = date %>% year()) %>%
+  dplyr::filter(date >= ymd("2020-01-01")) %>%
+  filter(geoname_id %in% top_adm) %>%
+  
+  group_by(geoname_id, month_i) %>%
+  dplyr::mutate(ntl_base = mean(ntl_sum[year_i == 2020])) %>%
+  ungroup() %>%
+  dplyr::mutate(ntl_sum = ntl_sum / ntl_base) %>%
+  dplyr::filter(date >= ymd("2021-01-01")) %>%
+  
+  # group_by(geoname_id) %>%
+  # dplyr::mutate(ntl_sum_base = ntl_sum[date == 2019]) %>%
+  # ungroup() %>%
+  # dplyr::mutate(ntl_sum = ntl_sum / ntl_sum_base * 100) %>%
+  
+  ggplot() +
+  geom_col(aes(x = date, y = ntl_sum),
+           fill = wbg_color_light) +
+  facet_wrap(~name) +
+  labs(x = NULL,
+       y = "Nighttime Lights") +
+  theme_manual
+```
+
+
+# Trends Removing 10% Townships
+
+```{r}
+ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
+                            paste0("ntl_", "mmr_adm2", "_", "monthly", ".Rds")))
+
+## Top 10 town
+town_sf <- read_xlsx(file.path(data_dir, "Conflict_spatial_township_level.xlsx"), 3) %>%
+  st_as_sf(coords = c("_CX", "_CY"),
+           crs = 4326) %>%
+  st_union()
+
+roi_sf <- read_sf(file.path(data_dir, "Shapefiles", "Boundaries",
+                            "mmr_polbnda_adm2_250k_mimu_1.shp"))
+
+roi_sf$top10_town <- st_intersects(roi_sf, town_sf, sparse = F)
+
+roi_town <- roi_sf %>%
+  dplyr::select(top10_town, DT_PCODE)
+
+ntl_df <- ntl_df %>%
+  left_join(roi_town, by = "DT_PCODE") 
+
+ntl_df <- ntl_df %>%
+  dplyr::mutate(date=date %>% ymd())
+
+#### Country
+ntl_df %>%
+  group_by(date, top10_town) %>%
+  dplyr::summarise(ntl_sum = sum(ntl_sum)) %>%
+  ungroup() %>%
+  
+  ggplot() +
+  geom_line(aes(x = date,
+                y = ntl_sum,
+                color = top10_town)) +
+  labs(x = NULL,
+       y = "Nighttime lights",
+       color = "Top 10%\nTownships") +
+  theme_classic2()
+
+#### ADM1
+ntl_df %>%
+  group_by(date, ST, top10_town) %>%
+  dplyr::summarise(ntl_sum = sum(ntl_sum)) %>%
+  ungroup() %>%
+  
+  ggplot() +
+  geom_line(aes(x = date,
+                y = ntl_sum,
+                color = top10_town)) +
+  labs(x = NULL,
+       y = "Nighttime lights",
+       color = "Top 10%\nTownships") +
+  theme_classic2() +
+  facet_wrap(~ST)
+```
+
 
 # % Change Maps
 
@@ -1293,6 +1564,8 @@ ntl_df <- bind_rows(
     dplyr::mutate(type = "Excluding\nIndustrial\nZones")
 )
 
+write_csv(ntl_df, "~/Desktop/ntl_indust_zone_annual.csv")
+
 ntl_df %>%
   group_by(type) %>%
   dplyr::mutate(ntl_sum_base = ntl_sum[date == 2019]) %>%
@@ -1317,6 +1590,8 @@ ntl_df <- bind_rows(
   readRDS(file.path(ntl_bm_dir, "aggregated", "ntl_adm0_noinduszone_monthly.Rds")) %>%
     dplyr::mutate(type = "Excluding\nIndustrial\nZones")
 )
+
+write_csv(ntl_df, "~/Desktop/ntl_indust_zone_monthly.csv")
 
 ntl_df %>%
   mutate(date = date %>% ymd()) %>%
