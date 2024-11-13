@@ -1005,8 +1005,23 @@ ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated",
                             paste0("ntl_", "adm0", "_", "monthly", ".Rds")))
 
 ntl_df %>%
+  dplyr::mutate(month_i = date %>% month,
+                year = date %>% year) %>%
+  dplyr::filter(month_i %in% 1:9) %>%
+  group_by(year) %>%
+  dplyr::summarise(ntl_sum = sum(ntl_sum)) %>%
+  ungroup() %>%
+  
+  ggplot() +
+  geom_col(aes(x = year,
+               y = ntl_sum))
+
+ntl_df %>%
   dplyr::mutate(date = date %>% ymd()) %>%
-  dplyr::filter(date >= ymd("2020-01-01")) %>%
+  dplyr::filter(date >= ymd("2022-01-01")) %>%
+  dplyr::mutate(
+    ntl_sum_ma3 = zoo::rollmean(ntl_sum, k = 3, fill = NA, align = "right")  # 3-month moving average
+  ) %>%
   # group_by(GID_0) %>%
   # dplyr::mutate(ntl_sum_base = ntl_sum[date == 2019]) %>%
   # ungroup() %>%
@@ -1014,6 +1029,8 @@ ntl_df %>%
   ggplot() +
   geom_col(aes(x = date, y = ntl_sum),
            fill = wbg_color_light) +
+  geom_line(aes(x = date, y = ntl_sum_ma3),
+            fill = "black") +
   facet_wrap(~COUNTRY) +
   labs(x = NULL,
        y = "Nighttime Lights") +
@@ -1405,7 +1422,7 @@ ntl_df <- ntl_df %>%
   left_join(roi_town, by = "DT_PCODE") 
 
 ntl_df <- ntl_df %>%
-  dplyr::mutate(date=date %>% ymd())
+  dplyr::mutate(date=date %>% ymd() %>% floor_date(unit = "6 months"))
 
 #### Country
 ntl_df %>%
@@ -1414,13 +1431,14 @@ ntl_df %>%
   ungroup() %>%
   
   ggplot() +
-  geom_line(aes(x = date,
-                y = ntl_sum,
-                color = top10_town)) +
+  geom_col(aes(x = date,
+               y = ntl_sum,
+               fill = top10_town)) +
   labs(x = NULL,
        y = "Nighttime lights",
        color = "Top 10%\nTownships") +
-  theme_classic2()
+  theme_classic2() +
+  facet_wrap(~top10_town)
 
 #### ADM1
 ntl_df %>%
@@ -1709,4 +1727,211 @@ ntl_df %>%
        y = "NTL") +
   theme_manual 
 ```
+
+# Summary Analysis
+
+## Annual, moving average
+```{r}
+library(zoo)
+
+ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
+                            paste0("ntl_", "adm0", "_", "monthly", ".Rds")))
+
+ntl_clean_df <- ntl_df %>%
+  dplyr::mutate(date = ymd(date)) %>%
+  dplyr::filter(date >= ymd("2020-01-01")) %>%
+  dplyr::group_by(COUNTRY) %>%
+  dplyr::mutate(
+    ntl_sum_ma3 = zoo::rollmean(ntl_sum, k = 3, fill = NA, align = "center")  # 3-month moving average
+  ) %>%
+  ungroup()
+
+write_csv(ntl_clean_df, "~/Desktop/myanmar_data/csv/adm0_monthly_3month_ma.csv")
+
+ntl_clean_df %>%
+  ggplot() +
+  geom_col(aes(x = date, y = ntl_sum), fill = wbg_color_light) +  # Original data
+  geom_line(aes(x = date, y = ntl_sum_ma3), color = "black",
+            linewidth = 1) +  # 3-month moving average
+  labs(
+    x = NULL,
+    y = "Nighttime Lights"
+  ) +
+  theme_manual
+
+ggsave(filename = "~/Desktop/myanmar_data/png/adm0_monthly_3month_ma.png",
+       height = 3, width = 4)
+```
+
+## Country Level, 9mo in 2023 and 2024
+
+```{r}
+ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
+                            paste0("ntl_", "adm1", "_", "monthly", ".Rds")))
+
+ntl_clean_df <- ntl_df %>%
+  dplyr::mutate(date = date %>% ymd(),
+                month = date %>% month(),
+                year = date %>% year()) %>%
+  group_by(year, NAME_1) %>%
+  dplyr::summarise(ntl_sum_9mo = mean(ntl_sum[month %in% 1:9], na.rm = T)) %>%
+  ungroup() %>%
+  dplyr::filter(year %in% 2023:2024) %>%
+  pivot_wider(id_cols = NAME_1,
+              names_from = year,
+              values_from = ntl_sum_9mo) %>%
+  dplyr::mutate(per_change = (`2024` - `2023`) / `2023` * 100)
+
+
+write_csv(ntl_clean_df, "~/Desktop/myanmar_data/csv/adm1_23_23_per_change.csv")
+
+library(forcats)
+
+ntl_clean_df %>%
+  dplyr::mutate(per_change_str = paste0(round(per_change, 2), "%")) %>%
+  dplyr::mutate(NAME_1 = fct_reorder(NAME_1, per_change)) %>%  # Reorder by per_change
+  ggplot(aes(x = per_change, y = NAME_1)) +
+  geom_col(fill = "gray80") +
+  geom_text(aes(label = per_change_str)) +
+  labs(x = NULL, y = "Nighttime Lights") +
+  scale_x_continuous(limits = c(-60, 10)) +
+  theme_classic2()
+
+ggsave(filename = "~/Desktop/myanmar_data/png/adm1_23_23_per_change.png",
+       height = 6, width = 4)
+```
+
+## Country Level, 9mo in 2023 and 2024
+
+```{r}
+ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
+                            paste0("ntl_", "adm0", "_", "monthly", ".Rds")))
+
+ntl_clean_df <- ntl_df %>%
+  dplyr::mutate(date = date %>% ymd(),
+                month = date %>% month(),
+                year = date %>% year()) %>%
+  group_by(year) %>%
+  dplyr::summarise(ntl_all_mo_sum = mean(ntl_sum),
+                   ntl_sum_9mo = mean(ntl_sum[month %in% 1:9], na.rm = T)) %>%
+  ungroup() %>%
+  mutate(ntl_sum_9mo_23_24 = case_when(
+    year %in% 2012:2022 ~ ntl_all_mo_sum,
+    year %in% 2023:2024 ~ ntl_sum_9mo
+  ))
+
+write_csv(ntl_clean_df, "~/Desktop/myanmar_data/csv/adm0_ntl.csv")
+
+ntl_clean_df %>%
+  ggplot() +
+  geom_col(aes(x = year,
+               y = ntl_sum_9mo_23_24)) +
+  labs(x = NULL,
+       y = "Nighttime Lights") + 
+  theme_classic2()
+
+ggsave(filename = "~/Desktop/myanmar_data/png/adm0_ntl.png",
+       height = 4, width = 6)
+```
+
+## Industrial Zones, 9mo in 2023 and 2024
+
+```{r}
+ntl_df <- bind_rows(
+  readRDS(file.path(ntl_bm_dir, "aggregated", "ntl_adm0_induszone_monthly.Rds")) %>%
+    dplyr::mutate(type = "Industrial\nZones"),
+  
+  readRDS(file.path(ntl_bm_dir, "aggregated", "ntl_adm0_noinduszone_monthly.Rds")) %>%
+    dplyr::mutate(type = "Excluding\nIndustrial\nZones")
+)
+
+ntl_clean_df <- ntl_df %>%
+  dplyr::mutate(date = date %>% ymd(),
+                month = date %>% month(),
+                year = date %>% year()) %>%
+  group_by(year, type) %>%
+  dplyr::summarise(ntl_all_mo_sum = mean(ntl_sum),
+                   ntl_sum_9mo = mean(ntl_sum[month %in% 1:9], na.rm = T)) %>%
+  ungroup() %>%
+  mutate(ntl_sum_9mo_23_24 = case_when(
+    year %in% 2012:2022 ~ ntl_all_mo_sum,
+    year %in% 2023:2024 ~ ntl_sum_9mo
+  ))
+
+write_csv(ntl_clean_df, "~/Desktop/myanmar_data/csv/adm0_industrialzones_ntl.csv")
+
+ntl_clean_df %>%
+  ggplot() +
+  geom_col(aes(x = year,
+               y = ntl_sum_9mo_23_24)) +
+  labs(x = NULL,
+       y = "Nighttime Lights") + 
+  theme_classic2() +
+  theme(strip.background = element_blank()) +
+  facet_grid(~type)
+
+ggsave(filename = "~/Desktop/myanmar_data/png/adm0_industrialzones_ntl.png",
+       height = 4, width = 10)
+
+```
+
+## Conflict Zones, 9mo in 2023 and 2024
+
+```{r}
+ntl_df <- readRDS(file.path(ntl_bm_dir, "aggregated", 
+                            paste0("ntl_", "mmr_adm2", "_", "monthly", ".Rds")))
+
+## Top 10 town
+town_sf <- read_xlsx(file.path(data_dir, "Conflict_spatial_township_level.xlsx"), 3) %>%
+  st_as_sf(coords = c("_CX", "_CY"),
+           crs = 4326) %>%
+  st_union()
+
+roi_sf <- read_sf(file.path(data_dir, "Shapefiles", "Boundaries",
+                            "mmr_polbnda_adm2_250k_mimu_1.shp"))
+
+roi_sf$top10_town <- st_intersects(roi_sf, town_sf, sparse = F) %>% as.numeric()
+roi_sf$top10_town <- ifelse(roi_sf$top10_town, 
+                            "Top 10% conflict townships",
+                            "Excluding top 10% conflict townships")
+
+roi_town <- roi_sf %>%
+  dplyr::select(top10_town, DT_PCODE)
+
+ntl_df <- ntl_df %>%
+  left_join(roi_town, by = "DT_PCODE") 
+
+
+## Clean
+ntl_clean_df <- ntl_df %>%
+  dplyr::mutate(date = date %>% ymd(),
+                month = date %>% month(),
+                year = date %>% year()) %>%
+  group_by(year, top10_town) %>%
+  dplyr::summarise(ntl_all_mo_sum = mean(ntl_sum),
+                   ntl_sum_9mo = mean(ntl_sum[month %in% 1:9], na.rm = T)) %>%
+  ungroup() %>%
+  mutate(ntl_sum_9mo_23_24 = case_when(
+    year %in% 2012:2022 ~ ntl_all_mo_sum,
+    year %in% 2023:2024 ~ ntl_sum_9mo
+  ))
+
+write_csv(ntl_clean_df, "~/Desktop/myanmar_data/csv/adm0_top10townships_ntl.csv")
+
+ntl_clean_df %>%
+  ggplot() +
+  geom_col(aes(x = year,
+               y = ntl_sum_9mo_23_24)) +
+  labs(x = NULL,
+       y = "Nighttime Lights") + 
+  theme_classic2() +
+  theme(strip.background = element_blank()) +
+  facet_grid(~top10_town)
+
+ggsave(filename = "~/Desktop/myanmar_data/png/adm0_top10townships_ntl.png",
+       height = 4, width = 10)
+```
+
+
+
 
